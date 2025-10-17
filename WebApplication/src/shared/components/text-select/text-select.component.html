@@ -1,0 +1,62 @@
+<div class="select-container">
+    <div class="d-flex align-items-center">
+        <input type="text"
+               #textInput
+               class="{{ formControlClass }} {{ required ? 'is-invalid-default' : '' }} input-padding"
+               style="text-overflow: ellipsis;"
+               [ngModel]="selectedModel"
+               (ngModelChange)="textFilterChange($event)"
+               [required]="required"
+               [placeholder]="placeholder"
+               [title]="selectedModel ? selectedModel : ''"
+               [disabled]="disabled">
+        @if(!disabled){
+
+        @if(allowClear && selectedModel){
+        <span class="fa fa-times clear-icon-input cursor-pointer"
+              (click)="clearSelection($event)"></span>
+        }
+
+        @if(loading){
+        <span class="search-icon-input fas fa-circle-notch fa-spin"></span>
+        }
+
+        @if(!loading){
+        <span id="chevronButton"
+              class="search-icon-input cursor-pointer {{ selectOpened ? 'fa fa-chevron-up' : 'fa fa-chevron-down' }}"
+              (click)="openCloseOptions()"></span>
+        }
+        }
+    </div>
+
+    <!-- options -->
+    @if(selectOpened && options.length > 0){
+    <div class="search-box-container">
+        <div #scrollDiv
+             class="d-flex {{formControlClass}} options-container border-top-0 flex-column"
+             [class.disabled-select]="disabled"
+             (scroll)="onScroll($event)">
+            @for(item of options; track item; let i = $index;) {
+            <div #optionsItemDiv
+                 id="item - {{i}}"
+                 class="options-item"
+                 [class.key-focused]="focusedItem && item?.stringValue == focusedItem?.stringValue"
+                 attr.name="{{i}}"
+                 (click)="optionsChanged(item, $event)">
+                <span class="options-item-text"
+                      [innerHtml]="item | nomenclaturePipe: textTemplate : filter.textFilter"
+                      [title]="item?.stringValue"></span>
+            </div>
+            }
+            @if((!options || options.length < 1)
+              &&
+              !loading){
+              <div
+              class="mt-1 ms-2">
+                <span>{{ 'root.searchResult.noResults' | translate }}</span>
+        </div>
+        }
+    </div>
+</div>
+}
+</div>

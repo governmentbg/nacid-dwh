@@ -1,0 +1,25 @@
+<div class="btn-group">
+    <input type="radio"
+           class="btn-check"
+           name="languageRadio"
+           id="bgLanguage"
+           autocomplete="off"
+           (click)="changeLanguage('bg')"
+           [checked]="translateService.currentLang === 'bg'">
+    <label class="btn btn-outline-primary"
+           for="bgLanguage">
+        {{ 'root.language.bulgarian' | translate }}
+    </label>
+
+    <input type="radio"
+           class="btn-check"
+           name="languageRadio"
+           id="enLanguage"
+           autocomplete="off"
+           (click)="changeLanguage('en')"
+           [checked]="translateService.currentLang === 'en'">
+    <label class="btn btn-outline-primary"
+           for="enLanguage">
+        {{ 'root.language.english' | translate }}
+    </label>
+</div>

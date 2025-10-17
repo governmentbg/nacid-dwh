@@ -1,0 +1,42 @@
+<div class="card shadow mt-4">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h6 class="modal-title text-secondary fw-bold">
+                {{ 'clickHouse.groupBy.selectedGroupBy' | translate }}
+            </h6>
+        </div>
+    </div>
+    <div class="card-body">
+        @if(chGroupBy.length > 0){
+        <ul>@for(item of chGroupBy; track item)
+            {
+            <div class="d-flex justify-content-between mt-1">
+                <div>
+                    <li class="fw-bold"
+                        [class.text-success]="item.autoAdded">
+                        @for(column of item.groupByColumns; track column; let idx = $index)
+                        {
+                        {{column.columnAs}}
+                        @if(idx !== item.groupByColumns.length - 1) {
+                        ,
+                        }
+                        }
+                    </li>
+                </div>
+                <div>
+                    @if(!item.autoAdded){
+                    <sync-button (btnClickedEvent)="removeGroupBy($index)"
+                                 icon="fas fa-times"
+                                 title="root.buttons.remove"
+                                 btnClass="btn btn-sm btn-danger">
+                    </sync-button>
+                    }
+                </div>
+            </div>
+            }
+        </ul>
+        } @else {
+        <i>{{ 'clickHouse.noResultSelected' | translate }}</i>
+        }
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<td class="align-middle">
+   <a class="link-primary"
+      (click)="openQuery()">
+      <translate-field [bgProperty]="templateQuery.name"
+                       [enProperty]="templateQuery.nameAlt"></translate-field>
+   </a>
+</td>
+<td class="align-middle">
+   {{'enums.templateAccessLevel.' + templateAccessLevel[templateQuery.accessLevel] |
+   translate}}
+</td>
+<td class="align-middle">
+   <span [class.text-success]="templateQuery.showAsSubquery">
+      <i class="fa-solid fa-lg"
+         title="{{(templateQuery.showAsSubquery ? 'booleans.active' : 'booleans.inactive') | translate}}"
+         [class.fa-check]="templateQuery.showAsSubquery">
+      </i>
+   </span>
+</td>
+<td class="align-middle">
+   <div class="d-flex justify-content-center gap-3 align-items-center">
+      @if(!buttonsActionSubmiting){
+      <i class="fa-solid fa-arrow-up-right-from-square text-purple cursor-pointer"
+         title="{{'root.buttons.moveToOtherGroup' | translate}}"
+         (click)="moveTemplateGroup()"
+         clickStopPropagation>
+      </i>
+
+      <i class="fa-solid fa-clone text-purple cursor-pointer"
+         title="{{'root.buttons.copyToOtherGroup' | translate}}"
+         (click)="copyToTemplateGroup()"
+         clickStopPropagation>
+      </i>
+
+      <i class="fa-solid fa-edit text-purple cursor-pointer"
+         title="{{'root.buttons.edit' | translate}}"
+         (click)="editTemplateQuery()"
+         clickStopPropagation>
+      </i>
+
+      <i class="fa-solid fa-download text-success cursor-pointer"
+         title="{{'root.buttons.saveAsShortcut' | translate}}"
+         (click)="saveAsShortcut()"
+         clickStopPropagation>
+      </i>
+
+      <i class="fa-solid fa-trash text-danger cursor-pointer"
+         title="{{'root.buttons.delete' | translate}}"
+         (click)="deleteTemplateQuery()"
+         clickStopPropagation>
+      </i>
+      } @else {
+      <i class="fas fa-circle-notch fa-spin text-primary"></i>
+      }
+   </div>
+</td>

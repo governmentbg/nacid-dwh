@@ -1,0 +1,15 @@
+<button type="button"
+        [disabled]="disabled"
+        title="{{title | translate}}"
+        ngbTooltip="{{ngTitle | translate}}"
+        class="{{btnClass}}"
+        (click)="btnClicked()"
+        clickStopPropagation>
+    @if(icon || pending){
+    <i style="min-width: 15px;"
+       class="{{ text ? 'me-1' : '' }} {{ pending ? 'fas fa-circle-notch fa-spin' : icon }}"></i>
+    }
+    @if(text && (showTextOnPending ? true : !pending)){
+    <span>{{ text | translate }}</span>
+    }
+</button>

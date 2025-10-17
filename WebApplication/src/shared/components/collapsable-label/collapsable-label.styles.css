@@ -1,0 +1,16 @@
+.list-dropbown-btn .fa-chevron-right {
+    transition: .3s transform ease-in-out;
+}
+
+.list-dropbown-btn:not(.collapsed-section) .fa-chevron-right {
+    transform: rotate(90deg);
+}
+
+.nav-link {
+    color: #135496;
+    font-weight: 700;
+}
+
+.nav-link:hover {
+    opacity: 0.8;
+}

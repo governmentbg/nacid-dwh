@@ -1,0 +1,78 @@
+<div class="card no-border shadow mt-4">
+    <div class="card-body">
+        @if(titledSearchResult && titledSearchResult.titles.length > 0){
+        <div class="d-flex justify-content-between">
+            <search-result [totalCount]="titledSearchResult.totalCount">
+            </search-result>
+
+            <dropdown-button text="root.buttons.export.title"
+                             icon="fa-solid fa-download"
+                             btnClass="btn-outline-success btn-sm"
+                             [loading]="loadingExport"
+                             [fromEnd]="true">
+                <button ngbDropdownItem
+                        clickStopPropagation
+                        (click)="exportExcel()">
+                    <i class="fa-solid fa-file-excel text-success me-2"></i>
+                    <span>{{ 'root.buttons.export.excel' | translate }}</span>
+                </button>
+                <button ngbDropdownItem
+                        clickStopPropagation
+                        (click)="exportCsv()">
+                    <i class="fa-solid fa-file-csv text-success me-2"></i>
+                    <span>{{ 'root.buttons.export.csv' | translate }}</span>
+                </button>
+                <button ngbDropdownItem
+                        clickStopPropagation
+                        (click)="exportJson()">
+                    <i class="fa-regular fa-file text-primary me-2"></i>
+                    <span>{{ 'root.buttons.export.json' | translate }}</span>
+                </button>
+                <button ngbDropdownItem
+                        clickStopPropagation
+                        (click)="exportXml()">
+                    <i class="fa-solid fa-file text-primary me-2"></i>
+                    <span>{{ 'root.buttons.export.xml' | translate }}</span>
+                </button>
+            </dropdown-button>
+        </div>
+
+        <div class="table-scrollable mt-4">
+            <table class="table table-striped">
+                <thead class="table-light">
+                    <tr>
+                        @for(title of titledSearchResult.titles; track title)
+                        {
+                        <th>{{ title }}</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(item of titledSearchResult.result; track
+                    item)
+                    {
+                    <tr>
+                        @for(title of titledSearchResult.titles; track title)
+                        {
+                        <td>{{ item[title] | autoDetectTypePipe }}</td>
+                        }
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <ngb-pagination [collectionSize]="titledSearchResult.totalCount"
+                            [(page)]="chQuery.pagination.currentPage"
+                            [pageSize]="chQuery.pagination.limit"
+                            (pageChange)="getChunk()"
+                            [maxSize]="3"
+                            [rotate]="true"
+                            [boundaryLinks]="true"></ngb-pagination>
+        </div>
+        } @else if (!chOutput || chOutput.length === 0) {
+        <i>{{ 'clickHouse.result' | translate }}</i>
+        }
+    </div>
+</div>

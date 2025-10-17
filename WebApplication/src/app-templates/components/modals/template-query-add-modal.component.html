@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-between align-items-center modal-header">
+    <h5 class="modal-title text-purple fw-bold">
+        {{ 'templates.query.createTitle' | translate }}
+    </h5>
+
+    <sync-button btnClass="btn-close"
+                 (btnClickedEvent)="decline()"
+                 [disabled]="addTemplateQueryPending">
+    </sync-button>
+</div>
+<form #form="ngForm"
+      autocomplete="off">
+    <div class="modal-body">
+        <template-query-basic [isEditMode]="true"
+                              [templateQueryDto]="templateQueryCreateDto.templateQuery"
+                              [addingNewTemplate]="true">
+        </template-query-basic>
+    </div>
+</form>
+
+<div class="modal-footer">
+    <sync-button btnClass="btn btn-sm btn-primary"
+                 (btnClickedEvent)="add()"
+                 text="root.buttons.add"
+                 [pending]="addTemplateQueryPending"
+                 [disabled]="form.invalid">
+    </sync-button>
+</div>

@@ -1,0 +1,87 @@
+<div class="card shadow mt-4">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h6 class="modal-title text-secondary fw-bold">
+                {{ 'clickHouse.output.selectedResult' | translate }}
+            </h6>
+        </div>
+    </div>
+    <div class="card-body">
+        @if(chOutput.length > 0){
+        @if(chOutput.length > 1){
+        <div class="d-flex fst-italic text-muted mb-1">
+            {{ 'clickHouse.output.changeOrderHint' | translate }}
+        </div>
+        }
+        <div cdkDropList
+             (cdkDropListDropped)="drop($event)"
+             id="dnd-container">
+            @for(item of chOutput; track item)
+            {
+            <div cdkDrag
+                 cdkDragLockAxis="y"
+                 cdkDragBoundary="#dnd-container"
+                 [cdkDragDisabled]="chOutput.length  < 2"
+                 class="d-flex justify-content-between p-1">
+                <div class="dnd-item"
+                     [class.cursor-pointer]="chOutput.length > 1"
+                     ngbTooltip="{{item.rawSelect}}"
+                     tooltipClass="custom-tooltip-purple">
+                    @if(item.columnAs){
+                    <span class="fw-bold me-1">
+                        {{ item.columnAs }},
+                    </span>
+                    }
+                    @if(item.outputAction === outputAction.columnAdd){
+                    {{ item.column?.name ?? item.subqueryColumn?.column?.name }}
+                    } @else if(item.outputAction === outputAction.partitionBy){
+                    {{ item.partitionByColumn.columnAs }}
+                    } @else if(item.outputAction === outputAction.sumSelectedColumns){
+                    @for(sumColumn of item.sumColumns; track sumColumn; let idx = $index)
+                    {
+                    {{sumColumn.columnAs}}
+                    @if(idx !== item.sumColumns.length - 1) {
+                    +
+                    }
+                    }
+                    }
+
+                    @if(item.aggregateFunction !== aggregateFunction.none){
+                    - {{ 'enums.aggregateFunction.' + aggregateFunction[item.aggregateFunction] + 'Short' |
+                    translate }}
+                    }
+
+                    @if(item.outputAction === outputAction.partitionBy){
+                    - partition by
+                    } @else if(item.outputAction === outputAction.sumSelectedColumns) {
+                    - sum columns
+                    }
+                </div>
+                <div class="d-flex gap-2">
+                    @if(item.aggregateFunction === aggregateFunction.countIf
+                    || item.aggregateFunction === aggregateFunction.countDistinctIf
+                    || item.aggregateFunction === aggregateFunction.minIf
+                    || item.aggregateFunction === aggregateFunction.maxIf
+                    || item.aggregateFunction === aggregateFunction.sumIf
+                    || item.aggregateFunction === aggregateFunction.avgIf){
+                    <sync-button (btnClickedEvent)="openEditConditionModal($index)"
+                                 icon="fa-solid fa-pen"
+                                 title="root.buttons.editCondition"
+                                 btnClass="btn btn-sm btn-primary">
+                    </sync-button>
+                    }
+
+                    <sync-button (btnClickedEvent)="removeOutput($index, item)"
+                                 icon="fas fa-times"
+                                 title="root.buttons.remove"
+                                 btnClass="btn btn-sm btn-danger">
+                    </sync-button>
+                </div>
+            </div>
+            }
+        </div>
+        } @else {
+        <i>{{ 'clickHouse.noResultSelected' | translate }}</i>
+        }
+    </div>
+</div>

@@ -1,0 +1,13 @@
+@if(show){
+<div>
+    @if(loadingText){
+    <div class="mt-{{marginSize}} mb-2 d-flex justify-content-center align-items-center">
+        <span class="fs-26">{{ loadingText | translate }}</span>
+    </div>
+    }
+
+    <div class="mb-{{marginSize}} d-flex justify-content-center align-items-center">
+        <i class="fas fa-circle-notch fa-spin {{iconSize}}"></i>
+    </div>
+</div>
+}

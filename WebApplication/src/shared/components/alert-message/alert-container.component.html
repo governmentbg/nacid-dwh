@@ -1,0 +1,24 @@
+@for(alertMessage of alertMessageService.alertMessages; track alertMessage) {
+<ngb-toast [class]="alertMessage.classname"
+           [autohide]="true"
+           [delay]="alertMessage.delay"
+           (hidden)="alertMessageService.remove(alertMessage)"
+           (click)="alertMessageService.remove(alertMessage)">
+    <div class="fs-16">
+        @if(alertMessage.icon){
+        <span class="{{alertMessage.icon}} me-1">
+        </span>
+        }
+        @if(alertMessage.alertText){
+        <span>
+            {{ alertMessage.alertText | translate }}
+        </span>
+        }
+        @if(alertMessage.customText){
+        <span>
+            {{ alertMessage.customText | translate }}
+        </span>
+        }
+    </div>
+</ngb-toast>
+}

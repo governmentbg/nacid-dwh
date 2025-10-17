@@ -1,0 +1,30 @@
+<div class="d-flex justify-content-between align-items-center modal-header">
+    <h5 class="modal-title text-purple fw-bold">
+        {{ 'templates.query.moveTitle' | translate }}
+    </h5>
+    <sync-button btnClass="btn-close"
+                 (btnClickedEvent)="decline()"
+                 [disabled]="moveTemplateGroupPending">
+    </sync-button>
+</div>
+<form #form="ngForm"
+      autocomplete="off">
+    <div class="modal-body">
+        <nomenclature-select restUrl="templateGroups/nomenclature"
+                             name="templateGroup"
+                             [(ngModel)]="selectedGroup"
+                             textTemplate="{{translateService.currentLang === 'bg' ? '{name}' : '{nameAlt}'}}"
+                             [filter]="{excludeGroupIds: [templateQuery?.templateGroupId]}"
+                             [allowClear]="false"
+                             [required]="true">
+        </nomenclature-select>
+    </div>
+</form>
+<div class="modal-footer">
+    <sync-button btnClass="btn btn-sm btn-primary"
+                 (btnClickedEvent)="move()"
+                 [pending]="moveTemplateGroupPending"
+                 text="root.buttons.move"
+                 [disabled]="form.invalid">
+    </sync-button>
+</div>

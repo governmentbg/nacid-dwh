@@ -1,0 +1,86 @@
+<div class="container mt-5">
+    <div class="card no-border shadow mb-4">
+        <div class="card-header">
+            <h5 class="modal-title text-purple fw-bold">
+                {{ 'templates.group.title' | translate }}
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">{{ 'templates.group.name' | translate }}</label>
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           [(ngModel)]="filter.name"
+                           name="name">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">{{ 'enums.templateAccessLevel.title' | translate }}</label>
+                    <enum-select name="accessLevel"
+                                 [(ngModel)]="filter.accessLevel"
+                                 enumName="templateAccessLevel"
+                                 [enumType]="templateAccessLevel"></enum-select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between gap-2">
+                <div class="d-flex">
+                    @if(hasTemplatesCreatePermission){
+                    <sync-button (btnClickedEvent)="addTemplateGroup()"
+                                 text="root.buttons.add"
+                                 icon="fas fa-plus"
+                                 btnClass="btn btn-primary btn-sm">
+                    </sync-button>
+                    }
+                </div>
+
+                <div class="d-flex gap-2">
+                    <sync-button (btnClickedEvent)="getData(true)"
+                                 text="root.buttons.search"
+                                 icon="fas fa-search"
+                                 btnClass="btn btn-primary btn-sm"
+                                 [pending]="getDataPending">
+                    </sync-button>
+
+                    <sync-button (btnClickedEvent)="clear()"
+                                 text="root.buttons.clear"
+                                 icon="fas fa-trash"
+                                 btnClass="btn btn-outline-primary btn-sm"
+                                 [pending]="clearDataPending">
+                    </sync-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if(!loadingData){
+    @if(searchResult.result && searchResult.result.length > 0){
+    <div class="d-flex justify-content-between">
+        <search-result [totalCount]="searchResult.totalCount">
+        </search-result>
+    </div>
+
+    <div class="row g-5 justify-content-between row-cols-2 mb-5">
+        @for(templateGroup of searchResult.result; track templateGroup) {
+        <template-group-search-card [templateGroup]="templateGroup">
+        </template-group-search-card>
+        }
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <ngb-pagination [collectionSize]="searchResult.totalCount"
+                        [(page)]="filter.currentPage"
+                        [pageSize]="filter.limit"
+                        (pageChange)="getData(false)"
+                        [maxSize]="3"
+                        [rotate]="true"
+                        [boundaryLinks]="true"></ngb-pagination>
+    </div>
+    } @else {
+    <i>{{ 'root.searchResult.noResults' | translate }}</i>
+    }
+    } @else {
+    <loading-section></loading-section>
+    }
+</div>

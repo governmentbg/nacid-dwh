@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="col-md-4">
+        <label class="form-label">
+            {{ 'enums.templateAccessLevel.shortTitle' | translate }}
+        </label>
+        <enum-select [(ngModel)]="templateGroupDto.accessLevel"
+                     [allowClear]="false"
+                     enumName="templateAccessLevel"
+                     [enumType]="templateAccessLevel"
+                     name="templateAccessLevel"
+                     [required]="true"
+                     [disabled]="!isEditMode">
+        </enum-select>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <label class="form-label">
+            {{ 'templates.group.name' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+            <span class="input-group-text">{{ 'root.language.bulgarianFull' | translate }}</span>
+            <input type="text"
+                   class="form-control form-control-sm is-invalid-default"
+                   [(ngModel)]="templateGroupDto.name"
+                   name="name"
+                   minlength="2"
+                   maxlength="250"
+                   #name="ngModel"
+                   ngbTooltip="{{ name.invalid ? ('invalidTexts.nonLatin' | translate) : null }}"
+                   tooltipClass="custom-tooltip-invalid"
+                   customRegexValidation="nonLatin"
+                   [disabled]="!isEditMode">
+        </div>
+
+        <div class="input-group input-group-sm mt-2">
+            <span class="input-group-text">{{ 'root.language.englishFull' | translate }}</span>
+            <input type="text"
+                   class="form-control form-control-sm is-invalid-default"
+                   [(ngModel)]="templateGroupDto.nameAlt"
+                   name="nameAlt"
+                   minlength="2"
+                   maxlength="250"
+                   #nameAlt="ngModel"
+                   ngbTooltip="{{ nameAlt.invalid ? ('invalidTexts.nonCyrillic' | translate) : null }}"
+                   tooltipClass="custom-tooltip-invalid"
+                   customRegexValidation="nonCyrillic"
+                   [enableEmptyValidation]="true"
+                   [disabled]="!isEditMode">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <label class="form-label">
+            {{ 'templates.group.description' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+            <span class="input-group-text">{{ 'root.language.bulgarianFull' | translate }}</span>
+            <input type="text"
+                   class="form-control form-control-sm is-invalid-default"
+                   [(ngModel)]="templateGroupDto.description"
+                   name="description"
+                   minlength="2"
+                   maxlength="500"
+                   #description="ngModel"
+                   ngbTooltip="{{ description.invalid ? ('invalidTexts.nonLatin' | translate) : null }}"
+                   tooltipClass="custom-tooltip-invalid"
+                   customRegexValidation="nonLatin"
+                   [enableEmptyValidation]="true"
+                   [disabled]="!isEditMode">
+        </div>
+
+        <div class="input-group input-group-sm mt-2">
+            <span class="input-group-text">{{ 'root.language.englishFull' | translate }}</span>
+            <input type="text"
+                   class="form-control form-control-sm is-invalid-default"
+                   [(ngModel)]="templateGroupDto.descriptionAlt"
+                   name="descriptionAlt"
+                   minlength="2"
+                   maxlength="500"
+                   #descriptionAlt="ngModel"
+                   ngbTooltip="{{ descriptionAlt.invalid ? ('invalidTexts.nonCyrillic' | translate) : null }}"
+                   tooltipClass="custom-tooltip-invalid"
+                   customRegexValidation="nonCyrillic"
+                   [enableEmptyValidation]="true"
+                   [disabled]="!isEditMode">
+        </div>
+    </div>
+</div>

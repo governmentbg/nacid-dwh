@@ -1,0 +1,62 @@
+<collapsable-label heading="clickHouse.orderBy.title"
+                   [isCollapsed]="true">
+    <div body>
+        @if(chTable?.name || chSubquery?.name) {
+        <div class="card shadow mt-2">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <h6 class="modal-title text-secondary fw-bold">
+                        {{ 'clickHouse.orderBy.constructOrderBy' | translate }}
+                    </h6>
+                </div>
+            </div>
+            <form #chOrderByForm="ngForm"
+                  autocomplete="off">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                {{ 'clickHouse.column' | translate }}
+                            </label>
+                            <array-select [array]="chOutput"
+                                          name="columnSelect"
+                                          textTemplate="{columnAs}"
+                                          [(ngModel)]="chOrderByPreparation.orderByColumn"
+                                          [required]="true">
+                            </array-select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label">
+                                {{ 'enums.orderByType.title' | translate }}
+                            </label>
+                            <enum-select name="orderBySelect"
+                                         [(ngModel)]="chOrderByPreparation.orderBy"
+                                         enumName="orderByType"
+                                         [enumType]="orderByType"
+                                         [allowClear]="false"
+                                         [required]="true">
+                            </enum-select>
+                        </div>
+                        <div class="d-flex col-md-1 align-self-end justify-content-end">
+                            <sync-button (btnClickedEvent)="addOrderBy()"
+                                         text="root.buttons.add"
+                                         btnClass="btn btn-sm btn-primary"
+                                         [disabled]="chOrderByForm.invalid">
+                            </sync-button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <ch-order-by-result [chOrderBy]="chOrderBy"
+                            (triggerRemoveOrderBy)="removeOrderBy($event)"
+                            (triggerChangeOrderBy)="changeOrderBy($event)">
+        </ch-order-by-result>
+        } @else {
+        <div class="border p-2">
+            <i>{{ 'clickHouse.pleaseSelectTable' | translate }}</i>
+        </div>
+        }
+    </div>
+</collapsable-label>

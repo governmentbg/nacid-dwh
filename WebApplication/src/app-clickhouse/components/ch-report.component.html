@@ -1,0 +1,33 @@
+<div class="container mt-5">
+    <ch-query-container #chQueryContainer
+                        [chQuery]="chQuery"
+                        [templateName]="templateName"
+                        [templateGroupName]="templateGroupName"
+                        [templateQueryId]="templateQueryId">
+        <sync-button buttons
+                     (btnClickedEvent)="getQuery(true)"
+                     text="root.buttons.search"
+                     icon="fas fa-search"
+                     btnClass="btn btn-primary btn-sm fw-bold"
+                     [pending]="getQueryPending"
+                     [disabled]="(!chQuery.table && !chQuery.subquery)  
+                        || chQuery.output.length < 1 
+                        || chQueryContainer?.chConditionComponent?.chConditionForm?.invalid">
+        </sync-button>
+
+        <sync-button buttons
+                     (btnClickedEvent)="clearAll()"
+                     text="root.buttons.clearAll"
+                     icon="fas fa-trash"
+                     btnClass="btn btn-outline-primary btn-sm fw-bold"
+                     [disabled]="!chQuery.table && !chQuery.subquery && titledSearchResult?.result?.length < 1">
+        </sync-button>
+    </ch-query-container>
+
+    <ch-result [chQuery]="chQuery"
+               [getChunkPending]="getChunkPending"
+               [titledSearchResult]="titledSearchResult"
+               [chOutput]="chQuery.output"
+               (triggerGetQuery)="getQuery(false)">
+    </ch-result>
+</div>

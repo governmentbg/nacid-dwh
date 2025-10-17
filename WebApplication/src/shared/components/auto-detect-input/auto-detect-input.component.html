@@ -1,0 +1,50 @@
+@switch (currentInputType) {
+@case (inputType.text) {
+<text-select [restUrl]="textSelectRestUrl"
+             [ngModel]="model"
+             (ngModelChange)="setValueFromInside($event)"
+             [filter]="{orderBy: orderByType}"
+             formControlClass="{{formControlClass}}"
+             [required]="true"
+             [disabled]="disabled">
+</text-select>
+}
+@case (inputType.number) {
+<number-input [ngModel]="model"
+              (ngModelChange)="setValueFromInside($event)"
+              formControlClass="{{formControlClass}}"
+              [returnAsString]="true"
+              [required]="true"
+              [disabled]="disabled">
+</number-input>
+}
+@case (inputType.date) {
+<date-time [ngModel]="model"
+           (ngModelChange)="setValueFromInside($event)"
+           [startYear]="1900"
+           formControlClass="{{formControlClass}}"
+           [required]="true"
+           [disabled]="disabled">
+</date-time>
+}
+@case (inputType.boolean) {
+<bool-select [ngModel]="model"
+             (ngModelChange)="setValueFromInside($event)"
+             formControlClass="{{formControlClass}}"
+             [returnAsString]="true"
+             [nullable]="false"
+             [required]="true"
+             [disabled]="disabled">
+</bool-select>
+}
+@default {
+<text-select [restUrl]="textSelectRestUrl"
+             [ngModel]="model"
+             (ngModelChange)="setValueFromInside($event)"
+             [filter]="{orderBy: orderByType}"
+             formControlClass="{{formControlClass}}"
+             [required]="true"
+             [disabled]="disabled">
+</text-select>
+}
+}

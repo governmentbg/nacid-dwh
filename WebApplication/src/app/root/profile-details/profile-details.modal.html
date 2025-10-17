@@ -1,0 +1,37 @@
+<div class="modal-header d-flex justify-content-between">
+    <h5 class="modal-title text-purple fw-bold">{{ 'auth.profile' | translate }}</h5>
+    <sync-button btnClass="btn-close"
+                 (btnClickedEvent)="decline()">
+    </sync-button>
+</div>
+<div class="modal-body">
+    <div class="d-flex justify-content-center fw-bold fs-22">
+        {{ userContextService.userContext.fullName }}
+    </div>
+    <div class="d-flex justify-content-center fs-18">
+        {{ userContextService.userContext.userName }}
+        @if(userContextService.userContext.phoneNumber){
+        ({{userContextService.userContext.phoneNumber}})
+        }
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        <language-select>
+        </language-select>
+    </div>
+    <collapsable-label class="mt-4"
+                       heading="auth.organizationalStructure.name"
+                       [isCollapsed]="false">
+        @if(userContextService.userContext.organizationalUnits?.length > 0) {
+        <ul body>
+            @for(organizationalUnit of userContextService.userContext.organizationalUnits; track
+            organizationalUnit) {
+            <li class="fst-italic">
+                {{ organizationalUnit.shortName }}
+            </li>
+            }
+        </ul>
+        } @else {
+        <i>{{ 'auth.organizationalStructure.notInOrganizationalStructure' | translate }}</i>
+        }
+    </collapsable-label>
+</div>

@@ -1,0 +1,9 @@
+@if(showButton) {
+<button type="button"
+        title="{{'root.scrollToTop' | translate}}"
+        class="btn btn-lg btn-primary rounded shadow"
+        clickStopPropagation
+        (click)="pageHandlingService.scrollToTop()">
+    <i class="fa-solid fa-chevron-up"></i>
+</button>
+}

@@ -1,0 +1,19 @@
+<div class="modal-header flex-row-reverse">
+    <sync-button btnClass="btn-close"
+                 (btnClickedEvent)="decline()">
+    </sync-button>
+</div>
+<div class="modal-body">
+    <div>{{ text | translate }}</div>
+    @if(text2){
+    <div class="mt-3">{{ text2 | translate }}</div>
+    }
+</div>
+@if(!infoOnly){
+<div class="modal-footer">
+    <sync-button btnClass="btn {{acceptButtonClass}}"
+                 (btnClickedEvent)="accept()"
+                 [text]="acceptButton">
+    </sync-button>
+</div>
+}

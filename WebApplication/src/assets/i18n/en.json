@@ -1,0 +1,286 @@
+{
+    "root": {
+        "title": "Data warehouse",
+        "scrollToTop": "Go to top",
+        "header": {
+            "nacidShort": "NACID",
+            "dw": "Data warehouse",
+            "menu": {
+                "reports": "Reports",
+                "templates": "Templates",
+                "logs": "System Logs"
+            }
+        },
+        "language": {
+            "bulgarian": "BG",
+            "english": "EN",
+            "bulgarianFull": "Bulgarian",
+            "englishFull": "English"
+        },
+        "loadingPage": {
+            "text": "Please wait..."
+        },
+        "loadingSection": {
+            "text": "Loading..."
+        },
+        "searchResult": {
+            "noResults": "No found results.",
+            "total": "Total",
+            "count": "Total",
+            "results": "results",
+            "loadingResults": "Loading...",
+            "missingData": "Missing data.",
+            "added": "Added"
+        },
+        "buttons": {
+            "add": "Add",
+            "edit": "Edit",
+            "save": "Save",
+            "delete": "Delete",
+            "cancel": "Cancel",
+            "search": "Search",
+            "yesSure": "Yes, sure",
+            "close": "Close",
+            "clear": "Clear",
+            "clearAll": "Clear all",
+            "choose": "Choose",
+            "actions": "Actions",
+            "remove": "Remove",
+            "review": "Review",
+            "move": "Move",
+            "moveToOtherGroup": "Move template query to other group",
+            "copy": "Copy",
+            "copyToOtherGroup": "Copy template query to other group",
+            "select": "SQL select",
+            "where": "SQL where",
+            "groupby": "SQL group by",
+            "orderby": "SQL order by",
+            "reviewQuery": "Review query",
+            "copyAsUrl": "Copy link",
+            "createTemplateQuery": "Create template",
+            "editTemplateQuery": "Edit template",
+            "downloadSql": "Download as SQL",
+            "loadMore": "Load more",
+            "editCondition": "Edit condition",
+            "saveAsShortcut": "Save as shortcut",
+            "export": {
+                "title": "Export",
+                "excel": "Excel",
+                "csv": "CSV",
+                "json": "JSON",
+                "xml": "XML"
+            }
+        },
+        "modals": {
+            "confirmDelete": "Are you sure you want to delete the record?"
+        }
+    },
+    "auth": {
+        "loginTitle": "Login",
+        "ssoLoginButton": "Login",
+        "profile": "Profile",
+        "logout": "Logout",
+        "user": {
+            "username": "Username"
+        },
+        "organizationalStructure": {
+            "name": "Organizational structure",
+            "notInOrganizationalStructure": "User is not in organizational structure"
+        }
+    },
+    "clickHouse": {
+        "table": "Table",
+        "queryConstruction": "Query construction",
+        "query": "Query",
+        "result": "No constructed report.",
+        "column": "Column",
+        "search": "Search",
+        "hasOpeningBracked": "(",
+        "hasClosingBracked": ")",
+        "expectedResult": "Expected result",
+        "pleaseSelectTable": "Please select table or subquery.",
+        "noResultSelected": "Missing data.",
+        "showQuery": "Show query",
+        "output": {
+            "title": "Output",
+            "columnSelect": "Column select",
+            "columnSelectSingular": "Column select",
+            "selectedResult": "Selected result",
+            "changeOrderHint": "*You can change the order of the fields by holding on the desired element and moving it.",
+            "columnAs": "Column as",
+            "partitionOverColumns": "Partition over columns",
+            "sumSelectedColumns": "Sum columns",
+            "aggregateFunction": "Aggregate function",
+            "missingSelectedColumn": "Please select atleast one column.",
+            "showAll": "Show all..."
+        },
+        "condition": {
+            "title": "Condition",
+            "constructCondition": "Constructing condition",
+            "edit": "Edit condition"
+        },
+        "groupBy": {
+            "title": "Group by",
+            "groupingSet": "Grouping set",
+            "selectedGroupBy": "Selected group by"
+        },
+        "orderBy": {
+            "title": "Order by",
+            "constructOrderBy": "Constructing order by",
+            "selectedResult": "Selected order by",
+            "changeOrderHint": "*You can change the order of the fields by holding on the desired element and moving it."
+        }
+    },
+    "templates": {
+        "group": {
+            "title": "Template groups",
+            "titleSingular": "Template group",
+            "createTitle": "Create template group",
+            "updateTitle": "Update template group",
+            "name": "Name",
+            "description": "Description"
+        },
+        "query": {
+            "titlePlural": "Templates",
+            "createTitle": "Create template",
+            "updateTitle": "Update template",
+            "moveTitle": "Move template to another group",
+            "copyTitle": "Copy template to another group",
+            "moveConfirmation": "Are you sure you want to move the template to another group?",
+            "copyConfirmation": "Are you sure you want to copy the template to this group?",
+            "editConfirmation": "Are you sure you want to edit the template?",
+            "deleteTitle": "After deleting the template you wont be able to use its functionalities. Please, delete the template only if you are sure its not used anymore!",
+            "showAsSubquery": "Show in subqueries",
+            "name": "Name",
+            "description": "Description"
+        }
+    },
+    "logs": {
+        "ip": "IP",
+        "url": "URL",
+        "verb": "Verb",
+        "date": "Date",
+        "username": "User",
+        "userAgent": "User agent",
+        "body": "body",
+        "errors": {
+            "title": "Errors",
+            "errorLogType": "Error type",
+            "message": "Exception",
+            "modals": {
+                "read": "Error view"
+            }
+        },
+        "actions": {
+            "title": "Actions",
+            "modals": {
+                "read": "Action view"
+            }
+        }
+    },
+    "booleans": {
+        "active": "Yes",
+        "inactive": "No",
+        "all": "All"
+    },
+    "enums": {
+        "queryType": {
+            "fromTable": "Table",
+            "fromSubquery": "Subquery"
+        },
+        "aggregateFunction": {
+            "none": "None",
+            "count": "Count",
+            "countIf": "Count if",
+            "countDistinct": "Count distinct",
+            "countDistinctIf": "Count distinct if",
+            "min": "Min",
+            "minIf": "Min if",
+            "max": "Max",
+            "maxIf": "Max if",
+            "sum": "Sum",
+            "sumIf": "Sum if",
+            "avg": "Avg",
+            "avgIf": "Avg if",
+            "noneShort": "none",
+            "countShort": "count",
+            "countIfShort": "countIf",
+            "countDistinctShort": "countDistinct",
+            "countDistinctIfShort": "countDistinctIf",
+            "minShort": "min",
+            "minIfShort": "minIf",
+            "maxShort": "max",
+            "maxIfShort": "maxIf",
+            "sumShort": "sum",
+            "sumIfShort": "sumIf",
+            "avgShort": "avg",
+            "avgIfShort": "avgIf"
+        },
+        "outputAction": {
+            "title": "Output action",
+            "columnAdd": "Add column",
+            "partitionBy": "Partition by",
+            "sumSelectedColumns": "Sum columns"
+        },
+        "operator": {
+            "title": "Operator",
+            "equalTo": "=",
+            "greaterThan": ">",
+            "lessThan": "<",
+            "greaterThanOrEqualTo": ">=",
+            "lessThanOrEqualTo": "<=",
+            "notEqualTo": "<>",
+            "in": "in",
+            "notIn": "not in",
+            "like": "like",
+            "notLike": "not like",
+            "isNull": "is null",
+            "isNotNull": "is not null",
+            "empty": "empty",
+            "notEmpty": "notEmpty"
+        },
+        "conjuction": {
+            "title": "Conjuction",
+            "and": "AND",
+            "or": "OR"
+        },
+        "orderByType": {
+            "title": "Order by",
+            "asc": "Ascending",
+            "desc": "Descending"
+        },
+        "templateAccessLevel": {
+            "title": "Template access level",
+            "shortTitle": "Access level",
+            "public": "Public",
+            "private": "Private"
+        }
+    },
+    "invalidTexts": {
+        "nonCyrillic": "Cyrillic letters are not allowed",
+        "nonLatin": "Latin letters are not allowed"
+    },
+    "successTexts": {
+        "copiedAsLink": "Query is copied as link.",
+        "createdTemplate": "Query is created as template.",
+        "templateQueryEdit": "Template is edited successfully",
+        "movedToTemplateGroup": "Template successfully moved",
+        "copiedToTemplateGroup": "Template successfully copied"
+    },
+    "errorTexts": {
+        "System_InternalServerError": "An error has occurred! Please contact the system administrator or support team!",
+        "System_ServerUnavailible": "No connection could be made with the server.",
+        "System_QueryTimeout": "The query is taking longer than expected! Please try again or contact the support team.",
+        "System_FunctionalityUnavailible": "Functionality is unavailible.",
+        "ClickHouse_InvalidTable": "Invalid table.",
+        "ClickHouse_Query_Empty": "Query is empty.",
+        "ClickHouse_Query_TableRequired": "Please select table for the query.",
+        "ClickHouse_Query_OutputEmpty": "Please select atleast one output item.",
+        "ClickHouse_Existing_Column_Name": "A column with that name is already selected! Please rename the selected column",
+        "TemplateGroup_AccessPrivate_RequireUser": "Private template groups require user.",
+        "TemplateQuery_AccessPrivate_RequireUser": "Private templates require user.",
+        "TemplateQuery_Basic_Required": "Basic data missing for the template.",
+        "TemplateQuery_ChQuery_Required": "Query missing for the template.",
+        "TemplateQuery_AccessUser_Wrong": "Not enough permission to create template in this template group."
+    }
+}

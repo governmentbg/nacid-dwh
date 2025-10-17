@@ -1,0 +1,20 @@
+<td>
+    <array-select [array]="sumColumnsOutput"
+                  name="sumColumn{{index}}"
+                  textTemplate="{columnAs}"
+                  [(ngModel)]="sumColumn"
+                  (ngModelChange)="sumColumnChange.emit($event)"
+                  [required]="true">
+    </array-select>
+</td>
+<td>
+    @if(index !== 0){
+    <div class="d-flex justify-content-center">
+        <sync-button (btnClickedEvent)="remove()"
+                     icon="fas fa-times"
+                     title="root.buttons.remove"
+                     btnClass="btn btn-sm btn-danger">
+        </sync-button>
+    </div>
+    }
+</td>

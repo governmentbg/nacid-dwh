@@ -1,0 +1,255 @@
+<collapsable-label heading="clickHouse.output.title"
+                   [isCollapsed]="false">
+    <div body>
+        @if(chTable?.name || chSubquery?.name) {
+        <div class="card shadow mt-2">
+            <div class="card-header">
+                <h6 class="modal-title text-secondary fw-bold">{{ 'clickHouse.output.columnSelect' | translate }}</h6>
+            </div>
+            <form #chOutputPreparationForm="ngForm"
+                  autocomplete="off">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">{{ 'enums.outputAction.title' | translate }}</label>
+                            <enum-select name="outputAction"
+                                         [(ngModel)]="chOutputPreparation.outputAction"
+                                         (ngModelChange)="outputActionChange()"
+                                         enumName="outputAction"
+                                         [enumType]="outputAction"
+                                         [allowClear]="false"
+                                         [excludeValues]="excludeOutputActions"
+                                         [disabled]="chOutput.length < 1 && normalColumnsOutput.length < 1"
+                                         [required]="true">
+                            </enum-select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @if(chOutputPreparation.outputAction !== outputAction.sumSelectedColumns){
+                        <div class="col-md-4">
+                            <label class="form-label align-self-end">
+                                {{ 'clickHouse.column' | translate }}
+                                @if(chOutputPreparation.outputAction === outputAction.columnAdd
+                                && chQueryType === queryType.fromTable) {
+                                <i class="fas fa-magnifying-glass text-purple cursor-pointer"
+                                   (click)="openColumnListModal()"
+                                   clickStopPropagation>
+                                </i>
+                                }
+                            </label>
+                            @if(chOutputPreparation.outputAction === outputAction.columnAdd){
+                            @if(chQueryType === queryType.fromTable){
+                            <nomenclature-select restUrl="ch/schema/{{chTable.name}}/columns"
+                                                 name="columnSelect"
+                                                 [textTemplate]="columnVisualizationText"
+                                                 [(ngModel)]="chOutputPreparation.column"
+                                                 [titleText]="chOutputPreparation?.column?.comment + ' - ' + chOutputPreparation?.column?.name"
+                                                 (ngModelChange)="chColumnChange(aggregateFunction.none, false, chOutputPreparation?.column?.type)"
+                                                 [required]="true">
+                            </nomenclature-select>
+                            } @else {
+                            <array-select [array]="chSubquery.chQuery.output"
+                                          name="columnSelect"
+                                          textTemplate="{columnAs}"
+                                          [(ngModel)]="chOutputPreparation.subqueryColumn"
+                                          (ngModelChange)="chColumnChange(aggregateFunction.none, false, chOutputPreparation?.subqueryColumn?.aggregateFunction === aggregateFunction.none ? chOutputPreparation?.subqueryColumn?.column?.type : 'Int')"
+                                          [required]="true"></array-select>
+                            }
+                            } @else {
+                            <array-select [array]="normalColumnsOutput"
+                                          name="partitionByColumn"
+                                          textTemplate="{columnAs}"
+                                          [(ngModel)]="chOutputPreparation.partitionByColumn"
+                                          (ngModelChange)="chColumnChange(aggregateFunction.count, true, chOutputPreparation?.partitionByColumn?.aggregateFunction === aggregateFunction.none ? chOutputPreparation?.partitionByColumn?.column?.type : 'int')"
+                                          [required]="true"></array-select>
+                            }
+                        </div>
+                        }
+                        <div [class.col-md-4]="chOutputPreparation.outputAction !== outputAction.sumSelectedColumns"
+                             [class.col-md-11]="chOutputPreparation.outputAction === outputAction.sumSelectedColumns">
+                            <label class="form-label">{{ 'clickHouse.output.columnAs' | translate }}</label>
+                            <input type="text"
+                                   class="form-control form-control-sm is-invalid-default"
+                                   [(ngModel)]="chOutputPreparation.columnAs"
+                                   #columnAs="ngModel"
+                                   name="columnAs"
+                                   minlength="2"
+                                   maxlength="100"
+                                   noWhiteSpacesValidation
+                                   [enableEmptyValidation]="chOutputPreparation.aggregateFunction === aggregateFunction.none"
+                                   [required]="chQueryType === queryType.fromSubquery
+                                    || chOutputPreparation.outputAction !== outputAction.columnAdd
+                                    || chOutputPreparation.aggregateFunction !== aggregateFunction.none"
+                                   [disabled]="!chOutputPreparation.column 
+                                            && !chOutputPreparation.subqueryColumn 
+                                            && !chOutputPreparation.partitionByColumn
+                                            && chOutputPreparation.outputAction !== outputAction.sumSelectedColumns">
+                        </div>
+                        @if(chOutputPreparation.outputAction !== outputAction.sumSelectedColumns){
+                        <div class="col-md-3">
+                            <label class="form-label">{{ 'clickHouse.output.aggregateFunction' | translate }}</label>
+                            <enum-select name="aggregateFunction"
+                                         [(ngModel)]="chOutputPreparation.aggregateFunction"
+                                         (ngModelChange)="clearConditions()"
+                                         enumName="aggregateFunction"
+                                         [enumType]="aggregateFunction"
+                                         [showSearchBox]="true"
+                                         [allowClear]="false"
+                                         [required]="true"
+                                         [excludeValues]="excludeAggregateFunctions"
+                                         [disabled]="!chOutputPreparation?.partitionByColumn && !chOutputPreparation?.column && !chOutputPreparation?.subqueryColumn">
+                            </enum-select>
+                        </div>
+                        }
+                        <div class="d-flex col-md-1 align-self-end justify-content-end">
+                            <sync-button (btnClickedEvent)="addOutput()"
+                                         text="root.buttons.add"
+                                         btnClass="btn btn-sm btn-primary"
+                                         [disabled]="chOutputPreparationForm.invalid">
+                            </sync-button>
+                        </div>
+                    </div>
+
+                    @if(chOutputPreparation.outputAction === outputAction.partitionBy){
+                    <label class="form-label">
+                        <strong>{{ 'clickHouse.output.partitionOverColumns' | translate }}</strong>
+                    </label>
+                    <table class="table table-bordered">
+                        <thead class="table-light fs-14">
+                            <tr>
+                                <th class="col-12">{{ 'clickHouse.column' | translate }}</th>
+                                <th class="col-1">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        @if(chOutputPreparation.partitionOverColumns.length <
+                                          normalColumnsOutput.length){
+                                          <sync-button
+                                          (btnClickedEvent)="addPartitionOverColumns()"
+                                          icon="fas fa-plus"
+                                          btnClass="btn btn-outline-success btn-sm fw-bold">
+                                            </sync-button>
+                                            }
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(partitionOverColumn of chOutputPreparation.partitionOverColumns; track
+                            partitionOverColumn)
+                            {
+                            <tr ch-partition-over-column
+                                [partitionOverColumn]="partitionOverColumn"
+                                (partitionOverColumnChange)="chOutputPreparation.partitionOverColumns[$index] = $event"
+                                [normalColumnsOutput]="normalColumnsOutput"
+                                [index]="$index"
+                                (triggerRemove)="removePartitionOverColumn($index)">
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    }
+
+                    @if(chOutputPreparation.outputAction === outputAction.sumSelectedColumns){
+                    <label class="form-label">
+                        <strong>{{ 'clickHouse.output.sumSelectedColumns' | translate }}</strong>
+                    </label>
+                    <table class="table table-bordered">
+                        <thead class="table-light fs-14">
+                            <tr>
+                                <th class="col-12">{{ 'clickHouse.column' | translate }}</th>
+                                <th class="col-1">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <sync-button (btnClickedEvent)="addSumSelectedColumns()"
+                                                     icon="fas fa-plus"
+                                                     btnClass="btn btn-outline-success btn-sm fw-bold">
+                                        </sync-button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(sumColumn of chOutputPreparation.sumColumns; track
+                            sumColumn)
+                            {
+                            <tr ch-sum-column
+                                [sumColumn]="sumColumn"
+                                (sumColumnChange)="chOutputPreparation.sumColumns[$index] = $event"
+                                [sumColumnsOutput]="sumColumnsOutput"
+                                [index]="$index"
+                                (triggerRemove)="removeSumColumn($index)">
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    }
+
+                    @if(chOutputPreparation.aggregateFunction === aggregateFunction.countIf
+                    || chOutputPreparation.aggregateFunction === aggregateFunction.countDistinctIf
+                    || chOutputPreparation.aggregateFunction === aggregateFunction.minIf
+                    || chOutputPreparation.aggregateFunction === aggregateFunction.maxIf
+                    || chOutputPreparation.aggregateFunction === aggregateFunction.sumIf
+                    || chOutputPreparation.aggregateFunction === aggregateFunction.avgIf){
+                    <label class="form-label">
+                        <strong>{{ 'clickHouse.condition.title' | translate }}</strong>
+                    </label>
+                    <table class="table table-bordered">
+                        <thead class="table-light fs-14">
+                            <tr>
+                                <th class="col-1">{{ 'enums.conjuction.title' | translate }}</th>
+                                <th class="col-4">{{ 'clickHouse.column' | translate }}</th>
+                                <th class="col-1">{{ 'enums.operator.title' | translate }}</th>
+                                <th class="col-4">{{ 'clickHouse.expectedResult' | translate }}</th>
+                                <th class="col-1">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <sync-button (btnClickedEvent)="addCondition(conjuctionEnum.and, chOutputPreparation.conditions)"
+                                                     text="enums.conjuction.and"
+                                                     btnClass="btn btn-outline-success btn-sm fw-bold">
+                                        </sync-button>
+
+                                        <sync-button (btnClickedEvent)="addCondition(conjuctionEnum.or, chOutputPreparation.conditions)"
+                                                     text="enums.conjuction.or"
+                                                     btnClass="btn btn-outline-success btn-sm fw-bold">
+                                        </sync-button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(condition of chOutputPreparation.conditions; track condition)
+                            {
+                            <tr ch-condition-tr
+                                [normalColumnsOutput]="normalColumnsOutput"
+                                [outputAction]="chOutputPreparation.outputAction"
+                                [canRemoveFirstElement]="false"
+                                [condition]="condition"
+                                [tableName]="chQueryType === queryType.fromTable ? chTable?.name : chSubquery?.chQuery?.table?.name"
+                                [chQueryType]="chQueryType"
+                                [chSubqueryOutputs]="chSubquery?.chQuery?.output"
+                                [openingBracketsCount]="openingBracketsCount"
+                                [closingBracketsCount]="closingBracketsCount"
+                                (hasBracketsChange)="calculateBrackets(chOutputPreparation.conditions)"
+                                [index]="$index"
+                                [canCloseBracket]="canCloseBracket($index, chOutputPreparation.conditions)"
+                                (triggerRemove)="removeCondition($index, chOutputPreparation.conditions)">
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    }
+                </div>
+            </form>
+        </div>
+
+        <ch-output-result [chQueryType]="chQueryType"
+                          [chOutput]="chOutput"
+                          [chTable]="chTable"
+                          [chSubquery]="chSubquery"
+                          [normalColumnsOutput]="normalColumnsOutput"
+                          (triggerRemoveOutput)="removedOutput($event)"></ch-output-result>
+        } @else {
+        <div class="border p-2">
+            <i>{{ 'clickHouse.pleaseSelectTable' | translate }}</i>
+        </div>
+        }
+    </div>
+</collapsable-label>

@@ -1,0 +1,299 @@
+{
+    "root": {
+        "title": "Хранилище за данни",
+        "scrollToTop": "Нагоре",
+        "header": {
+            "nacidShort": "НАЦИД",
+            "dw": "Хранилище за данни",
+            "menu": {
+                "reports": "Справки",
+                "templates": "Шаблони",
+                "logs": "Системни Логове"
+            }
+        },
+        "language": {
+            "bulgarian": "BG",
+            "english": "EN",
+            "bulgarianFull": "На български",
+            "englishFull": "На английски"
+        },
+        "loadingPage": {
+            "text": "Моля, изчакайте..."
+        },
+        "loadingSection": {
+            "text": "Зареждане..."
+        },
+        "searchResult": {
+            "noResults": "Няма намерени резултати.",
+            "total": "Общо",
+            "count": "Брой",
+            "results": "резултата",
+            "loadingResults": "Зареждане...",
+            "missingData": "Липсва информация.",
+            "added": "Добавени"
+        },
+        "buttons": {
+            "add": "Добави",
+            "edit": "Редакция",
+            "save": "Запис",
+            "delete": "Изтриване",
+            "cancel": "Отказ",
+            "search": "Търсене",
+            "yesSure": "Да, сигурен съм",
+            "close": "Затвори",
+            "clear": "Изчисти",
+            "clearAll": "Изчисти всичко",
+            "choose": "Избери",
+            "actions": "Действия",
+            "remove": "Премахни",
+            "review": "Преглед",
+            "move": "Премести",
+            "moveToOtherGroup": "Премести шаблона в друга група",
+            "copy": "Копирай",
+            "copyToOtherGroup": "Копирай шаблона в друга група",
+            "select": "SQL select",
+            "where": "SQL where",
+            "groupby": "SQL group by",
+            "orderby": "SQL order by",
+            "reviewQuery": "Преглед на цялата SQL заявка",
+            "copyAsUrl": "Копирай линка",
+            "createTemplateQuery": "Създай нов шаблон",
+            "editTemplateQuery": "Запиши редакцията на шаблона",
+            "downloadSql": "Свали SQL заявката",
+            "loadMore": "Зареди още",
+            "editCondition": "Редактирай условието",
+            "saveAsShortcut": "Свали като линк",
+            "export": {
+                "title": "Експорт",
+                "excel": "Ексел",
+                "csv": "CSV",
+                "json": "JSON",
+                "xml": "XML"
+            }
+        },
+        "modals": {
+            "confirmDelete": "Сигурни ли сте, че искате да изтриете записа?"
+        }
+    },
+    "auth": {
+        "loginTitle": "Вход в системата",
+        "ssoLoginButton": "Вход",
+        "profile": "Профил",
+        "logout": "Изход",
+        "user": {
+            "username": "Потребителско име"
+        },
+        "organizationalStructure": {
+            "name": "Организационна структура",
+            "notInOrganizationalStructure": "Потребителят не е към организационна структура"
+        }
+    },
+    "clickHouse": {
+        "table": "Таблица",
+        "queryConstruction": "Конструиране на справка",
+        "query": "Заявка",
+        "result": "Моля, посочете критерии за генериране на справка.",
+        "column": "Колона",
+        "search": "Търсене",
+        "hasOpeningBracked": "(",
+        "hasClosingBracked": ")",
+        "expectedResult": "Очакван резултат",
+        "pleaseSelectTable": "Моля, посочете таблица или подзаявка.",
+        "noResultSelected": "Липсват данни.",
+        "showQuery": "Към справката",
+        "output": {
+            "title": "Резултат",
+            "columnSelect": "Избор на колони в резултата",
+            "columnSelectSingular": "Избор на колона",
+            "selectedResult": "Колони в резултата",
+            "changeOrderHint": "*Чрез задържане на мишката върху желаният елемент и преместването му, може да промените подредбата на полетата.",
+            "columnAs": "Наименование на колоната в резултата",
+            "partitionOverColumns": "Дял от колони",
+            "sumSelectedColumns": "Сумиране на колони",
+            "aggregateFunction": "Агрегатна функция",
+            "missingSelectedColumn": "Моля, изберете поне една колона като резултат.",
+            "showAll": "Покажи всички..."
+        },
+        "condition": {
+            "title": "Условие",
+            "constructCondition": "Конструиране на условие",
+            "edit": "Редакция на условие"
+        },
+        "groupBy": {
+            "title": "Групиране",
+            "groupingSet": "Избор на група",
+            "selectedGroupBy": "Избрани групи"
+        },
+        "orderBy": {
+            "title": "Подредба",
+            "constructOrderBy": "Конструиране на подредбата",
+            "selectedResult": "Избрана подредба",
+            "changeOrderHint": "*Чрез задържане на мишката върху желаният елемент и преместването му, може да промените подредбата на полетата."
+        }
+    },
+    "templates": {
+        "group": {
+            "title": "Групи шаблони",
+            "titleSingular": "Група шаблон",
+            "createTitle": "Създаване на група шаблон",
+            "updateTitle": "Редакция на група шаблон",
+            "name": "Наименование",
+            "description": "Описание"
+        },
+        "query": {
+            "titlePlural": "Шаблона",
+            "createTitle": "Създаване на шаблон",
+            "updateTitle": "Редакция на шаблон",
+            "moveTitle": "Премести шаблона в друга група",
+            "copyTitle": "Копирай шаблона в друга група",
+            "moveConfirmation": "Сигурни ли сте, че искате да преместите шаблона в друга група?",
+            "copyConfirmation": "Сигурни ли сте, че искате да копирате шаблона в тази група?",
+            "editConfirmation": "Сигурни ли сте, че искате да направите редакция на шаблона?",
+            "deleteTitle": "След изтриване на шаблона, няма да имате възможност да използвате повече неговите функционалности. Моля, изтривайте шаблона само ако сте сигурни, че не се използва от никого!",
+            "showAsSubquery": "Показване в подзаявки",
+            "name": "Наименование",
+            "description": "Описание"
+        }
+    },
+    "logs": {
+        "ip": "IP адрес",
+        "url": "URL",
+        "verb": "Verb",
+        "date": "Дата",
+        "username": "Потребител",
+        "userAgent": "Клиент",
+        "body": "Заявка",
+        "errors": {
+            "title": "Грешки",
+            "errorLogType": "Тип на грешката",
+            "message": "Грешка",
+            "modals": {
+                "read": "Преглед на грешка"
+            }
+        },
+        "actions": {
+            "title": "Действия",
+            "modals": {
+                "read": "Преглед на извършено действие"
+            }
+        }
+    },
+    "booleans": {
+        "active": "Да",
+        "inactive": "Не",
+        "all": "Всички"
+    },
+    "enums": {
+        "queryType": {
+            "fromTable": "Таблица",
+            "fromSubquery": "Подзаявка"
+        },
+        "aggregateFunction": {
+            "none": "Не е избрана",
+            "count": "Брой (count)",
+            "countIf": "Брой с условие (countIf)",
+            "countDistinct": "Брой уникални (countDistinct)",
+            "countDistinctIf": "Брой уникални с условие (countDistinctIf)",
+            "min": "Минимално (min)",
+            "minIf": "Минимално с условие (minIf)",
+            "max": "Максимално (max)",
+            "maxIf": "Максимално с условие (maxIf)",
+            "sum": "Сумиране (sum)",
+            "sumIf": "Сумиране с условие (sumIf)",
+            "avg": "Средно аритметично (avg)",
+            "avgIf": "Средно аритметично с условие (avgIf)",
+            "noneShort": "none",
+            "countShort": "count",
+            "countIfShort": "countIf",
+            "countDistinctShort": "countDistinct",
+            "countDistinctIfShort": "countDistinctIf",
+            "minShort": "min",
+            "minIfShort": "minIf",
+            "maxShort": "max",
+            "maxIfShort": "maxIf",
+            "sumShort": "sum",
+            "sumIfShort": "sumIf",
+            "avgShort": "avg",
+            "avgIfShort": "avgIf"
+        },
+        "outputAction": {
+            "title": "Действие",
+            "columnAdd": "Добавяне на колона",
+            "partitionBy": "Дял от",
+            "sumSelectedColumns": "Събиране на колони"
+        },
+        "operator": {
+            "title": "Оператор",
+            "equalTo": "=",
+            "greaterThan": ">",
+            "lessThan": "<",
+            "greaterThanOrEqualTo": ">=",
+            "lessThanOrEqualTo": "<=",
+            "notEqualTo": "<>",
+            "in": "in",
+            "notIn": "not in",
+            "like": "like",
+            "notLike": "not like",
+            "isNull": "is null",
+            "isNotNull": "is not null",
+            "empty": "empty",
+            "notEmpty": "notEmpty"
+        },
+        "conjuction": {
+            "title": "Съчетание",
+            "and": "И",
+            "or": "ИЛИ"
+        },
+        "orderByType": {
+            "title": "Подредба",
+            "asc": "Възходящ",
+            "desc": "Низходящ"
+        },
+        "templateAccessLevel": {
+            "title": "Ниво на достъп",
+            "shortTitle": "Ниво на достъп",
+            "public": "За всички",
+            "private": "Само за мен"
+        },
+        "errorLogType": {
+            "serverExceptionLog": "Server exception",
+            "jobExceptionLog": "Job еxception",
+            "messageBrokerExceptionLog": "Message broker exception",
+            "emailSenderExceptionLog": "Email sender exception",
+            "integrationExceptionLog": "Integration exception"
+        },
+        "verb": {
+            "get": "GET",
+            "post": "POST",
+            "put": "PUT",
+            "delete": "DELETE"
+        }
+    },
+    "invalidTexts": {
+        "nonCyrillic": "Полето не позволява букви на кирилица",
+        "nonLatin": "Полето не позволява букви на латиница"
+    },
+    "successTexts": {
+        "copiedAsLink": "Справката е копирана като линк.",
+        "createdTemplate": "Справката е създадена като шаблон.",
+        "templateQueryEdit": "Шаблонът е редактиран успешно.",
+        "movedToTemplateGroup": "Шаблонът е успешно преместен",
+        "copiedToTemplateGroup": "Шаблонът е успешно копиран"
+    },
+    "errorTexts": {
+        "System_InternalServerError": "Възникна грешка! Моля, свържете се с администратора на системата или с екипа по поддръжка!",
+        "System_ServerUnavailible": "Не е осъществена връзката със сървъра.",
+        "System_QueryTimeout": "Заявката отне повече време от очакваното! Моля, опитайте отново или се свържете с екипа по поддръжка!",
+        "System_FunctionalityUnavailible": "Функционалността не е налична.",
+        "ClickHouse_InvalidTable": "Невалидна таблица.",
+        "ClickHouse_Query_Empty": "Заявката няма стойности.",
+        "ClickHouse_Query_TableRequired": "Моля, посочете таблица за справката.",
+        "ClickHouse_Query_OutputEmpty": "Липсват резултати за справката.",
+        "ClickHouse_Existing_Column_Name": "Вече има избрана колона със същото име! Моля, преименувайте избраната колона",
+        "TemplateGroup_AccessPrivate_RequireUser": "Частните групи шаблони, трябва да са към потребител.",
+        "TemplateQuery_AccessPrivate_RequireUser": "Частните шаблони, трябва да са към потребител.",
+        "TemplateQuery_Basic_Required": "Липсват основни данни за шаблона.",
+        "TemplateQuery_ChQuery_Required": "Липсва заявка към шаблона.",
+        "TemplateQuery_AccessUser_Wrong": "Нямате достатъчно права, за да създавате шаблони в посочената шаблонна група."
+    }
+}

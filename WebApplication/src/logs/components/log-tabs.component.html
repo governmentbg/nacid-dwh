@@ -1,0 +1,26 @@
+<div class="container mt-5">
+  <div class="card no-border shadow">
+    <div class="card-body">
+      <nav ngbNav
+           #nav="ngbNav"
+           [(activeId)]="activeTab"
+           class="nav-tabs fw-bold">
+        <ng-container ngbNavItem="Error">
+          <a ngbNavLink>{{ 'logs.errors.title' | translate }}</a>
+          <ng-template ngbNavContent>
+            <error-log-search></error-log-search>
+          </ng-template>
+        </ng-container>
+        <ng-container ngbNavItem="Action">
+          <a ngbNavLink>{{ 'logs.actions.title' | translate }}</a>
+          <ng-template ngbNavContent>
+            <action-log-search></action-log-search>
+          </ng-template>
+        </ng-container>
+      </nav>
+      <div [ngbNavOutlet]="nav"
+           class="mt-2">
+      </div>
+    </div>
+  </div>
+</div>

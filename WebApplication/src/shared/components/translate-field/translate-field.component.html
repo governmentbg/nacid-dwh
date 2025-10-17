@@ -1,0 +1,9 @@
+@if((this.translateService.currentLang === 'bg' && bgProperty) || (this.translateService.currentLang === 'en' &&
+(bgProperty ||
+enProperty))){
+<span class="pre-line-white-space {{class}}">
+  {{ this.translateService.currentLang === 'bg' ? bgProperty : (enProperty ?? bgProperty) }}
+</span>
+} @else {
+<span class="pre-line-white-space {{class}}">{{ 'root.searchResult.missingData' | translate }}</span>
+}

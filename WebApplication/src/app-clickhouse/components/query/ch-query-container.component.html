@@ -1,0 +1,126 @@
+<div class="card no-border shadow">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            @if (!templateGroupName && !templateName) {
+                <h5 class="modal-title text-purple fw-bold">{{ 'clickHouse.queryConstruction' | translate }}</h5>
+            } @else {
+                <div class="modal-title text-purple fw-bold">
+                    <div>{{ templateGroupName }}</div>
+                    <div>{{ templateName }}</div>
+                </div>
+            }
+            <div class="d-flex justify-content-end gap-2">
+                <dropdown-button text="root.buttons.actions"
+                                 icon="fa-solid fa-bars"
+                                 btnClass="btn-outline-primary btn-sm fw-bold"
+                                 [fromEnd]="true"
+                                 [disabled]="(!chQuery.table && !chQuery.subquery)
+                        || chQuery.output.length < 1 
+                        || chConditionComponent?.chConditionForm?.invalid">
+                    @if(templateQueryId && this.chQuery.queryType === queryType.fromTable && hasTemplatesWritePermission) {
+                    <button ngbDropdownItem
+                            clickStopPropagation
+                            (click)="editTemplateQuery()">
+                        <i class="fa-solid fa-edit text-primary me-2"></i>
+                        <span>{{ 'root.buttons.editTemplateQuery' | translate }}</span>
+                    </button>
+                    }
+                    @if(hasTemplatesCreatePermission){
+                    <button ngbDropdownItem
+                            clickStopPropagation
+                            (click)="openAddTemplateQuery()">
+                        <i class="fa-solid fa-file-lines text-primary me-2"></i>
+                        <span>{{ 'root.buttons.createTemplateQuery' | translate }}</span>
+                    </button>
+                    }
+                    <button ngbDropdownItem
+                            clickStopPropagation
+                            (click)="copyAsUrl()">
+                        <i class="fa-solid fa-link text-primary me-2"></i>
+                        <span>{{ 'root.buttons.copyAsUrl' | translate }}</span>
+                    </button>
+                </dropdown-button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input cursor-pointer"
+                           type="radio"
+                           name="fromTable"
+                           id="fromTable"
+                           (click)="changeQueryType(queryType.fromTable)"
+                           [checked]="chQuery.queryType === queryType.fromTable">
+                    <label class="form-check-label cursor-pointer"
+                           for="fromTable">
+                        {{ 'enums.queryType.fromTable' | translate }}
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input cursor-pointer"
+                           type="radio"
+                           name="fromSubquery"
+                           id="fromSubquery"
+                           (click)="changeQueryType(queryType.fromSubquery)"
+                           [checked]="chQuery.queryType === queryType.fromSubquery">
+                    <label class="form-check-label cursor-pointer"
+                           for="fromSubquery">
+                        {{ 'enums.queryType.fromSubquery' | translate }}
+                    </label>
+                </div>
+                @if(chQuery.queryType === queryType.fromTable){
+                <nomenclature-select restUrl="ch/schema/tables"
+                                     name="table"
+                                     [textTemplate]="columnVisualizationText"
+                                     [(ngModel)]="chQuery.table"
+                                     [titleText]="chQuery?.table?.comment + ' - ' + chQuery?.table?.name"
+                                     (ngModelChange)="clearQuery()">
+                </nomenclature-select>
+                } @else if(chQuery.queryType === queryType.fromSubquery) {
+                <nomenclature-select restUrl="templateQueries/search/subquery"
+                                     name="subquery"
+                                     [filter]="{showAsSubquery: true}"
+                                     [(ngModel)]="chQuery.subquery"
+                                     (ngModelChange)="clearQuery()">
+                </nomenclature-select>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <ch-output #chOutputComp
+                       [chQueryType]="chQuery.queryType"
+                       [chSubquery]="chQuery.subquery"
+                       [chTable]="chQuery.table"
+                       [chOutput]="chQuery.output"></ch-output>
+        </div>
+
+        <div class="row">
+            <ch-condition #chConditionComp
+                          [chQueryType]="chQuery.queryType"
+                          [chSubquery]="chQuery.subquery"
+                          [chTable]="chQuery.table"
+                          [chCondition]="chQuery.condition"></ch-condition>
+        </div>
+
+        <div class="row">
+            <ch-group-by #chGroupByComp
+                         [chQuery]="chQuery"
+                         [(chGroupBy)]="chQuery.groupBy"></ch-group-by>
+        </div>
+
+        <div class="row">
+            <ch-order-by #chOrderByComp
+                         [chSubquery]="chQuery.subquery"
+                         [chTable]="chQuery.table"
+                         [(chOrderBy)]="chQuery.orderBy"
+                         [chOutput]="chQuery.output"></ch-order-by>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+            <ng-content select="[buttons]"></ng-content>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-between align-items-center modal-header">
+    <h5 class="modal-title text-purple fw-bold">
+        {{ 'clickHouse.condition.edit' | translate }}
+    </h5>
+
+    <sync-button btnClass="btn-close"
+                 (btnClickedEvent)="decline()">
+    </sync-button>
+</div>
+<div class="modal-body">
+    <form #chConditionForm="ngForm"
+          autocomplete="off">
+        <table class="table table-bordered">
+            <thead class="table-light fs-14">
+                <tr>
+                    <th class="col-1">{{ 'enums.conjuction.title' | translate }}</th>
+                    <th class="col-4">{{ 'clickHouse.column' | translate }}</th>
+                    <th class="col-1">{{ 'enums.operator.title' | translate }}</th>
+                    <th class="col-4">{{ 'clickHouse.expectedResult' | translate }}</th>
+                    <th class="col-1">
+                        <div class="d-flex justify-content-end gap-2">
+                            <sync-button (btnClickedEvent)="addCondition(conjuctionEnum.and, chConditions)"
+                                         text="enums.conjuction.and"
+                                         btnClass="btn btn-outline-success btn-sm fw-bold">
+                            </sync-button>
+
+                            <sync-button (btnClickedEvent)="addCondition(conjuctionEnum.or, chConditions)"
+                                         text="enums.conjuction.or"
+                                         btnClass="btn btn-outline-success btn-sm fw-bold">
+                            </sync-button>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(condition of chConditions; track condition)
+                {
+                <tr ch-condition-tr
+                    [normalColumnsOutput]="normalColumnsOutput"
+                    [outputAction]="outputAction"
+                    [canRemoveFirstElement]="false"
+                    [condition]="condition"
+                    [tableName]="chQueryType === queryType.fromTable ? chTable?.name : chSubquery?.chQuery?.table?.name"
+                    [chQueryType]="chQueryType"
+                    [chSubqueryOutputs]="chSubquery?.chQuery?.output"
+                    [openingBracketsCount]="openingBracketsCount"
+                    [closingBracketsCount]="closingBracketsCount"
+                    (hasBracketsChange)="calculateBrackets(chConditions)"
+                    [index]="$index"
+                    [canCloseBracket]="canCloseBracket($index, chConditions)"
+                    (triggerRemove)="removeCondition($index, chConditions)">
+                </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <sync-button btnClass="btn btn-sm btn-primary"
+                 (btnClickedEvent)="save()"
+                 icon="fa-solid fa-floppy-disk"
+                 text="root.buttons.save"
+                 [disabled]="chConditionForm.invalid">
+    </sync-button>
+</div>

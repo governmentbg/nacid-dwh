@@ -1,0 +1,143 @@
+<td>
+    @if(condition.conjuction){
+    <enum-select name="conjuction{{index}}"
+                 [(ngModel)]="condition.conjuction"
+                 enumName="conjuction"
+                 [enumType]="conjuctionEnum"
+                 [allowClear]="false"
+                 [required]="true">
+    </enum-select>
+    }
+</td>
+<td>
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2 col-md-1">
+            <input class="form-check-input cursor-pointer"
+                   type="checkbox"
+                   name="hasOpeningBracket{{index}}"
+                   id="hasOpeningBracket"
+                   [(ngModel)]="condition.hasOpeningBracket"
+                   (ngModelChange)="hasBracketChange()">
+            <span class="fs-20 fw-bold"
+                  [class.text-primary]="condition.hasOpeningBracket"
+                  [class.text-muted]="!condition.hasOpeningBracket">
+                {{ 'clickHouse.hasOpeningBracked' | translate }}
+            </span>
+        </div>
+
+        <div class="col-md-10">
+            @if(outputAction === outputActionEnum.columnAdd){
+            @if(chQueryType === queryType.fromTable){
+            <nomenclature-select restUrl="ch/schema/{{tableName}}/columns"
+                                 name="columnSelect{{index}}"
+                                 [textTemplate]="columnVisualizationText"
+                                 [(ngModel)]="condition.column"
+                                 [titleText]="condition?.column?.comment + ' - ' + condition?.column?.name"
+                                 (ngModelChange)="columnChanged(condition.column?.type)"
+                                 [required]="true">
+            </nomenclature-select>
+            } @else {
+            <array-select [array]="chSubqueryOutputs"
+                          name="columnSelect{{index}}"
+                          textTemplate="{columnAs}"
+                          [(ngModel)]="condition.subqueryColumn"
+                          (ngModelChange)="columnChanged(condition?.subqueryColumn?.aggregateFunction === aggregateFunction.none ? condition?.subqueryColumn?.column?.type : 'Int')"
+                          [required]="true"></array-select>
+            }
+            } @else if(outputAction === outputActionEnum.partitionBy) {
+            <array-select [array]="normalColumnsOutputColumns"
+                          name="partitionByColumn{{index}}"
+                          [textTemplate]="columnVisualizationText"
+                          [(ngModel)]="condition.column"
+                          (ngModelChange)="columnChanged(condition.column?.type)"
+                          [required]="true"></array-select>
+            }
+        </div>
+    </div>
+</td>
+<td>
+    <enum-select name="operator{{index}}"
+                 [(ngModel)]="condition.operator"
+                 (ngModelChange)="operatorChanged()"
+                 enumName="operator"
+                 [enumType]="operatorEnum"
+                 [allowClear]="false"
+                 [required]="true"
+                 [excludeValues]="excludeOperators"
+                 [disabled]="!condition?.column && !condition?.subqueryColumn">
+    </enum-select>
+</td>
+<td>
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="col-md-10">
+            @if(condition.operator === operatorEnum.in || condition.operator === operatorEnum.notIn){
+            @for(contain of condition.contains; track contain; let containIndex = $index) {
+            <div class="row">
+                <div class="col-md-10">
+                    <auto-detect-input [(ngModel)]="contain.expectedResult"
+                                       textSelectRestUrl="ch/schema/{{tableName}}/{{chQueryType === queryType.fromTable ? condition?.column?.name : condition?.subqueryColumn?.column?.name}}/values"
+                                       [columnType]="chQueryType === queryType.fromTable ? condition.column?.type : (condition?.subqueryColumn?.aggregateFunction === aggregateFunction.none ? condition?.subqueryColumn?.column?.type : 'Int')"
+                                       [columnComment]="condition?.column?.comment"
+                                       name="expectedResult{{index}}{{containIndex}}"
+                                       [required]="true"
+                                       [disabled]="!condition?.column && !condition?.subqueryColumn">
+                    </auto-detect-input>
+                </div>
+                @if(containIndex !== 0){
+                <div class="col-md-1">
+                    <sync-button (btnClickedEvent)="removeContain(containIndex)"
+                                 icon="fas fa-trash"
+                                 title="root.buttons.remove"
+                                 btnClass="btn btn-sm btn-danger">
+                    </sync-button>
+                </div>
+                }
+            </div>
+            }
+            <div class="d-flex justify-content-start">
+                <sync-button (btnClickedEvent)="addContain()"
+                             icon="fas fa-plus"
+                             title="root.buttons.add"
+                             btnClass="btn btn-sm btn-primary">
+                </sync-button>
+            </div>
+            } @else {
+            <auto-detect-input [(ngModel)]="condition.expectedResult"
+                               textSelectRestUrl="ch/schema/{{tableName}}/{{chQueryType === queryType.fromTable ? condition?.column?.name : condition?.subqueryColumn?.column?.name}}/values"
+                               [columnType]="chQueryType === queryType.fromTable ? condition.column?.type : (condition?.subqueryColumn?.aggregateFunction === aggregateFunction.none ? condition?.subqueryColumn?.column?.type : 'Int')"
+                               [columnComment]="condition?.column?.comment"
+                               name="expectedResult{{index}}"
+                               [required]="true"
+                               [disabled]="(!condition?.column && !condition?.subqueryColumn) || condition.operator === operatorEnum.isNull || condition.operator === operatorEnum.isNotNull || condition.operator === operatorEnum.empty || condition.operator === operatorEnum.notEmpty">
+            </auto-detect-input>
+            }
+        </div>
+
+        <div class="d-flex align-items-center gap-2 col-md-1">
+            <span class="fs-20 fw-bold"
+                  [class.text-primary]="condition.hasClosingBracket"
+                  [class.text-danger]="!condition.hasClosingBracket && openingBracketsCount > closingBracketsCount"
+                  [class.text-muted]="!condition.hasClosingBracket && openingBracketsCount <= closingBracketsCount">
+                {{ 'clickHouse.hasClosingBracked' | translate }}
+            </span>
+            <input class="form-check-input cursor-pointer"
+                   type="checkbox"
+                   name="hasClosingBracket{{index}}"
+                   id="hasClosingBracket"
+                   [disabled]="!canCloseBracket && !condition.hasClosingBracket"
+                   [(ngModel)]="condition.hasClosingBracket"
+                   (ngModelChange)="hasBracketChange()">
+        </div>
+    </div>
+</td>
+<td>
+    @if(canRemoveFirstElement || index !== 0){
+    <div class="d-flex justify-content-center">
+        <sync-button (btnClickedEvent)="remove()"
+                     icon="fas fa-times"
+                     title="root.buttons.remove"
+                     btnClass="btn btn-sm btn-danger">
+        </sync-button>
+    </div>
+    }
+</td>

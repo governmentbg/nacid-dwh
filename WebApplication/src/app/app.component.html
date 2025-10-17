@@ -1,0 +1,24 @@
+<alert-container>
+</alert-container>
+
+@if(userContextService.userContext.authorizationState === authorizationState.login ||
+userContextService.userContext.authorizationState === authorizationState.logout) {
+<section>
+    <app-header></app-header>
+</section>
+
+<section class="main-section">
+    <!-- Breadcrumb -->
+    <router-outlet></router-outlet>
+</section>
+
+<scroll-to-top>
+</scroll-to-top>
+
+<section class="mt-4">
+    <footer></footer>
+</section>
+
+} @else {
+<loading-page></loading-page>
+}

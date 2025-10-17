@@ -1,0 +1,17 @@
+.vs/*
+.vs/*/**
+
+**/bin
+**/obj
+**/Log
+
+*.tmp
+*.suo
+*.csproj.user
+*.exe
+
+Server/.vs/**
+Server/wwwroot/**
+
+Deployment/build/**
+Deployment/package/**

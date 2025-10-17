@@ -1,0 +1,9 @@
+.input-padding {
+    padding-right: 40px;
+}
+
+.clear-icon-input {
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+}

@@ -1,0 +1,9 @@
+<input type="number"
+       class="{{ formControlClass }} {{ required ? 'is-invalid-default' : '' }}"
+       [ngModel]="model"
+       (ngModelChange)="setValueFromInside($event)"
+       #numberInput="ngModel"
+       [step]="step"
+       [required]="required"
+       [placeholder]="placeholder"
+       [disabled]="disabled">

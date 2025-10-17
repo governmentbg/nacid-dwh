@@ -1,0 +1,21 @@
+<div class="d-flex align-items-center">
+  <sync-button *ngIf="resultLength > 0"
+               (btnClickedEvent)="getCountEvent.emit()"
+               icon="fas fa-info"
+               btnClass="btn btn-primary btn-sm"
+               [pending]="dataCountPending">
+  </sync-button>
+
+  <a *ngIf="!dataCount && resultLength > 0"
+     class="link-default ms-2"
+     (click)="getCountEvent.emit()">
+    {{ 'root.searchResult.count' | translate }} {{ 'root.searchResult.results' | translate }}
+  </a>
+
+  <search-result *ngIf="dataCount != null"
+                 class="ms-2"
+                 [offset]="offset"
+                 [limit]="limit"
+                 [totalCount]="dataCount">
+  </search-result>
+</div>

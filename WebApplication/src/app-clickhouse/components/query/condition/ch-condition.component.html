@@ -1,0 +1,77 @@
+<collapsable-label heading="clickHouse.condition.title"
+                   [isCollapsed]="true">
+    <div body>
+        @if(chTable?.name || chSubquery?.name) {
+        <div class="card shadow mt-2">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <h6 class="modal-title text-secondary fw-bold">
+                        {{ 'clickHouse.condition.constructCondition' | translate }}
+                    </h6>
+
+                    @if(chCondition.length === 0){
+                    <sync-button (btnClickedEvent)="addCondition(null, chCondition)"
+                                 text="root.buttons.add"
+                                 btnClass="btn btn-primary btn-sm">
+                    </sync-button>
+                    }
+                </div>
+            </div>
+            <form #chConditionForm="ngForm"
+                  autocomplete="off">
+                <div class="card-body">
+                    @if(chCondition.length > 0){
+                    <table class="table table-bordered">
+                        <thead class="table-light fs-14">
+                            <tr>
+                                <th class="col-1"></th>
+                                <th class="col-4">{{ 'clickHouse.column' | translate }}</th>
+                                <th class="col-1">{{ 'enums.operator.title' | translate }}</th>
+                                <th class="col-4">{{ 'clickHouse.expectedResult' | translate }}</th>
+                                <th class="col-1">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <sync-button (btnClickedEvent)="addCondition(conjuctionEnum.and, chCondition)"
+                                                     text="enums.conjuction.and"
+                                                     btnClass="btn btn-outline-success btn-sm fw-bold">
+                                        </sync-button>
+
+                                        <sync-button (btnClickedEvent)="addCondition(conjuctionEnum.or, chCondition)"
+                                                     text="enums.conjuction.or"
+                                                     btnClass="btn btn-outline-success btn-sm fw-bold">
+                                        </sync-button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(condition of chCondition; track condition)
+                            {
+                            <tr ch-condition-tr
+                                [canRemoveFirstElement]="true"
+                                [condition]="condition"
+                                [tableName]="chQueryType === queryType.fromTable ? chTable?.name : chSubquery?.chQuery?.table?.name"
+                                [chQueryType]="chQueryType"
+                                [chSubqueryOutputs]="chSubquery?.chQuery?.output"
+                                [openingBracketsCount]="openingBracketsCount"
+                                [closingBracketsCount]="closingBracketsCount"
+                                (hasBracketsChange)="calculateBrackets(chCondition)"
+                                [index]="$index"
+                                [canCloseBracket]="canCloseBracket($index, chCondition)"
+                                (triggerRemove)="removeCondition($index, chCondition)">
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    } @else {
+                    <i>{{ 'clickHouse.noResultSelected' | translate }}</i>
+                    }
+                </div>
+            </form>
+        </div>
+        } @else {
+        <div class="border p-2">
+            <i>{{ 'clickHouse.pleaseSelectTable' | translate }}</i>
+        </div>
+        }
+    </div>
+</collapsable-label>

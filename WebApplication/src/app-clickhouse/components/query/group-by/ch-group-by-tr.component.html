@@ -1,0 +1,17 @@
+<td>
+    <array-select [array]="chOutputGrouping"
+                  name="groupByColumn{{index}}"
+                  textTemplate="{columnAs}"
+                  [(ngModel)]="groupByColumn"
+                  (ngModelChange)="groupByColumnChange.emit($event)"
+                  [required]="true"></array-select>
+</td>
+<td>
+    <div class="d-flex justify-content-center">
+        <sync-button (btnClickedEvent)="remove()"
+                     icon="fas fa-times"
+                     title="root.buttons.remove"
+                     btnClass="btn btn-sm btn-danger">
+        </sync-button>
+    </div>
+</td>

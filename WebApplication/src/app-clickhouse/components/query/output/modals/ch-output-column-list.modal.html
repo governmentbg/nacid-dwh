@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-between align-items-center modal-header">
+    <h5 class="modal-title text-purple fw-bold">
+        {{ 'clickHouse.output.columnSelectSingular' | translate }}
+    </h5>
+
+    <sync-button btnClass="btn-close"
+                 (btnClickedEvent)="decline()"
+                 [disabled]="loadingData">
+    </sync-button>
+</div>
+<div class="modal-body">
+    @if(!loadingData){
+    <div class="row">
+        <div class="col-md-12">
+            <label class="form-label">{{ 'clickHouse.search' | translate }}</label>
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-search"></i>
+                </span>
+                <input type="text"
+                       class="form-control"
+                       [(ngModel)]="textFilter"
+                       (ngModelChange)="columnFilterChanged($event)"
+                       name="columnFilter">
+            </div>
+        </div>
+    </div>
+    <ul class="list-group">
+        @if(chColumnDtos?.length > 0){
+        @for(item of chColumnDtos | slice: 0:endIndex; track item)
+        {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="ms-2 me-auto">
+                <div>
+                    <span class="fw-bold">
+                        {{ item.comment }}
+                    </span>
+                    <span>
+                        {{ item.type }}
+                    </span>
+                </div>
+                <div class="text-muted fst-italic">
+                    {{ item.name }}
+                </div>
+            </div>
+
+            <sync-button (btnClickedEvent)="selectChColumn(item)"
+                         text="root.buttons.choose"
+                         btnClass="btn btn-sm btn-primary rounded-pill">
+            </sync-button>
+        </li>
+        }
+        } @else {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <i>{{ 'root.searchResult.noResults' | translate }}</i>
+        </li>
+        }
+    </ul>
+
+    @if(chColumnDtos && chColumnDtos.length > 10){
+    <div class="d-flex flex-row-reverse mt-4 fs-18">
+        @if(endIndex === 10){
+        <a class="link-primary fw-bold"
+           (click)="endIndex = chColumnDtos.length"
+           clickStopPropagation>
+            {{ 'clickHouse.output.showAll' | translate }}
+        </a>
+        } @else {
+        <a class="link-primary fw-bold"
+           (click)="endIndex = 10"
+           clickStopPropagation>
+            {{ 'root.buttons.close' | translate }}
+        </a>
+        }
+    </div>
+    }
+    } @else {
+    <loading-section></loading-section>
+    }
+</div>

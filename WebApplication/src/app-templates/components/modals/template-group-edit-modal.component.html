@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-between align-items-center modal-header">
+    <h5 class="modal-title text-purple fw-bold">
+        {{ 'templates.group.updateTitle' | translate }}
+    </h5>
+
+    <sync-button btnClass="btn-close"
+                 (btnClickedEvent)="decline()"
+                 [disabled]="editTemplateGroupPending">
+    </sync-button>
+</div>
+<form #form="ngForm"
+      autocomplete="off">
+    <div class="modal-body">
+        @if(!loadingData){
+        <template-group-basic [isEditMode]="isEditMode"
+                              [templateGroupDto]="templateGroupDto"
+                              [disableAccessLevel]="true">
+        </template-group-basic>
+        } @else {
+        <loading-section></loading-section>
+        }
+    </div>
+</form>
+
+<div class="modal-footer">
+    @if(!isEditMode){
+    <sync-button btnClass="btn btn-sm btn-primary"
+                 (btnClickedEvent)="edit()"
+                 text="root.buttons.edit">
+    </sync-button>
+    }
+
+    @if(isEditMode){
+    <sync-button btnClass="btn btn-sm btn-success"
+                 (btnClickedEvent)="save()"
+                 text="root.buttons.save"
+                 [pending]="editTemplateGroupPending"
+                 [disabled]="form.invalid">
+    </sync-button>
+    }
+
+    @if(isEditMode){
+    <sync-button btnClass="btn btn-sm btn-danger"
+                 (btnClickedEvent)="cancel()"
+                 text="root.buttons.cancel">
+    </sync-button>
+    }
+</div>

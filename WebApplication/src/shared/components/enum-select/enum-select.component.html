@@ -1,0 +1,66 @@
+<div class="select-container"
+     [class.cursor-pointer]="!disabled">
+    <!-- selected item and buttons -->
+    <div class="d-flex {{formControlClass}} selected-item"
+         [class.is-invalid-static]="!disabled && required && !selectedModel && !selectOpened"
+         [class.disabled-select]="disabled">
+        <div class="d-flex w-100 justify-content-between">
+            <div class="selected-entity">
+                @if(selectedModel){
+                <span title="{{ 'enums.' + enumName + '.' + enumType[selectedModel] | translate }}">
+                    {{ 'enums.' + enumName + '.' + enumType[selectedModel] | translate }}
+                </span>
+                }
+            </div>
+
+            @if(!disabled){
+            <div>
+                @if(allowClear && selectedModel){
+                <span class="fa fa-times me-2"
+                      (click)="clearSelection($event)"></span>
+                }
+                <span class="{{ selectOpened ? 'fa fa-chevron-up' : 'fa fa-chevron-down' }}"></span>
+            </div>
+            }
+        </div>
+    </div>
+
+    <!-- search -->
+    @if(selectOpened){
+    <div class="search-box-container">
+        @if(showSearchBox){
+        <div class="d-flex align-items-center">
+            <input type="text"
+                   [autofocus]="true"
+                   class="{{formControlClass}} search-box"
+                   [ngModel]="textFilter"
+                   [disabled]="disabled"
+                   (ngModelChange)="textFilterChange($event)">
+            <span class="search-icon-input fas fa-search fa-sm search-box"></span>
+        </div>
+        }
+
+        <div #scrollDiv
+             class="d-flex {{formControlClass}} options-container border-top-0 flex-column"
+             [class.disabled-select]="disabled">
+            @for(option of options; track option; let i = $index;) {
+            <div #optionsItemDiv
+                 id="item - {{i}}"
+                 class="options-item"
+                 [class.key-focused]="focusedItem && option?.name == focusedItem?.name"
+                 attr.name="{{i}}"
+                 (click)="optionsChanged(option.value, $event)">
+                <span class="options-item-text"
+                      [title]="option.name">{{ option.name }}</span>
+            </div>
+            }
+            @if(!options || options.length < 1){
+              <div
+              class="mt-1 ms-2">
+                <span>{{ 'root.searchResult.noResults' | translate }}</span>
+        </div>
+        }
+    </div>
+</div>
+}
+</div>

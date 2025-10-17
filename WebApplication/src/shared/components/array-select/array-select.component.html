@@ -1,0 +1,79 @@
+<div class="array-select-container"
+     [class.cursor-pointer]="!disabled">
+    <!-- selected item and buttons -->
+    <div class="d-flex {{formControlClass}} selected-item"
+         [class.is-invalid-static]="!disabled && required && !selectedModel && !selectOpened"
+         [class.disabled-select]="disabled">
+        @if(placeholder && !selectedModel){
+        <div class="d-flex text-gray">
+            <span [innerHtml]="placeholder | translate"></span>
+        </div>
+        }
+
+        <div class="d-flex w-100 justify-content-between">
+            <div [ngClass]="selectedModel?.isActive === false ? 'line-through-decoration selected-entity' : 'selected-entity'"
+                 [innerHtml]="selectedModel | nomenclaturePipe: textTemplate">
+            </div>
+            @if(!disabled){
+            <div>
+                @if(allowClear && selectedModel){
+                <span class="fa fa-times me-2"
+                      (click)="clearSelection($event)"></span>
+                }
+                @if(loading){
+                <span class="fas fa-circle-notch fa-spin"></span>
+                }
+                @if(!loading){
+                <span id="chevronButton"
+                      class="{{ selectOpened ? 'fa fa-chevron-up' : 'fa fa-chevron-down' }}"></span>
+                }
+            </div>
+            }
+        </div>
+    </div>
+
+    <!-- search -->
+    @if(selectOpened){
+    <div class="search-box-container">
+        @if(showSearchBox){
+        <div class="d-flex align-items-center">
+            <input type="text"
+                   [autofocus]="true"
+                   class="{{formControlClass}} search-box"
+                   [disabled]="disabled"
+                   [(ngModel)]="textFilter"
+                   (ngModelChange)="textFilterChange($event)">
+            <span class="search-icon-input fas fa-search fa-sm search-box"></span>
+        </div>
+        }
+
+        <div class="d-flex {{formControlClass}} options-container border-top-0 flex-column"
+             [class.disabled-select]="disabled">
+            @for(item of options; track item) {
+            <div class="options-item"
+                 (click)="optionsChanged(item, $event)">
+                <span [ngClass]="{ 'line-through-decoration' : item.isActive === false}"
+                      [innerHtml]="item | nomenclaturePipe: textTemplate"></span>
+            </div>
+            }
+            @if((!options || options.length < 1)
+              &&
+              !loading){
+              <div
+              class="mt-1 ms-2">
+                <span>{{ 'root.searchResult.noResults' | translate }}</span>
+        </div>
+        }
+
+        @if((!options || options.length < 1)
+          &&
+          loading){
+          <div
+          class="mt-1 ms-2">
+            <span>{{ 'searchResult.loadingResults' | translate }}</span>
+    </div>
+    }
+</div>
+</div>
+}
+</div>

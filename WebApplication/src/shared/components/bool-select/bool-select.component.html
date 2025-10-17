@@ -1,0 +1,40 @@
+<div class="bool-select-container"
+     [class.cursor-pointer]="!disabled">
+  <!-- selected item and buttons -->
+  <div class="d-flex {{formControlClass}}"
+       [class.is-invalid-static]="!disabled && required && !model && model !== false && !selectOpened"
+       [class.disabled-select]="disabled">
+    <div class="d-flex w-100 justify-content-between">
+      @if(!model && model !== false && !required){
+      <span>{{ items[2].name | translate }}</span>
+      }
+      @if(model === false){
+      <span>{{ items[1].name | translate }}</span>
+      }
+      @if(model === true){
+      <span>{{ items[0].name | translate }}</span>
+      }
+
+      @if(!disabled){
+      <div class="d-flex w-100 justify-content-end align-items-center">
+        <span class="{{ selectOpened ? 'fa fa-chevron-up' : 'fa fa-chevron-down' }}"></span>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- search -->
+  @if(selectOpened){
+  <div class="search-box-container">
+    <div class="d-flex {{formControlClass}} options-container border-top-0 flex-column"
+         [class.disabled-select]="disabled">
+      @for(item of items; track item) {
+      <div class="options-item"
+           (click)="selectOption(item.value, $event)">
+        <span>{{ item.name | translate }}</span>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

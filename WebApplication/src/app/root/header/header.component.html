@@ -1,0 +1,72 @@
+<header class="shadow">
+    <nav class="navbar navbar-expand-lg container">
+        <a class="navbar-brand text-white d-flex align-items-center"
+           [routerLink]="['/']">
+            <img src="../../../assets/img/nacid_logo_light.png"
+                 width="50"
+                 height="55" />
+            <div class="mt-2 ms-2">
+                <h4 class="nacid-text">{{ 'root.header.nacidShort' | translate }}</h4>
+                <h6 class="nacid-subtext">{{ 'root.header.dw' | translate }}</h6>
+            </div>
+        </a>
+
+        @if(userContextService.userContext.authorizationState === authorizationState.login){
+        <button #toggleBtn
+                class="navbar-toggler text-purple shadow-none me-3"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
+            <i class="fa-solid fa-bars fa-xl"></i>
+        </button>
+
+        <div id="navbarCollapse"
+             #collapseContainer
+             class="collapse navbar-collapse justify-content-end">
+            <ul ngbNav
+                class="nav-pills">
+                <li ngbNavItem="report"
+                    class="nav-item-underline">
+                    <a ngbNavLink
+                       routerLink="reports"
+                       routerLinkActive="nav-link-active"
+                       #reportsActive="routerLinkActive"
+                       [ngClass]="{'active': reportsActive.isActive }">
+                        {{ 'root.header.menu.reports' | translate }}
+                    </a>
+                </li>
+
+                @if(hasTemplatesReadPermission){
+                <li ngbNavItem="templates"
+                    class="nav-item-underline">
+                    <a ngbNavLink
+                       routerLink="templateGroups"
+                       routerLinkActive="nav-link-active"
+                       #templatesActive="routerLinkActive"
+                       [ngClass]="{'active': true }">
+                        {{ 'root.header.menu.templates' | translate }}
+                    </a>
+                </li>
+                }
+
+                @if(hasSystemLogsReadPermission) {
+                <li ngbNavItem="logs"
+                    class="nav-item-underline">
+                    <a ngbNavLink
+                       routerLink="logs"
+                       routerLinkActive="nav-link-active"
+                       #templatesActive="routerLinkActive"
+                       [ngClass]="{'active': true }">
+                        {{ 'root.header.menu.logs' | translate }}
+                    </a>
+                </li>
+                }
+
+                <li ngbNavItem="profile">
+                    <profile-button></profile-button>
+                </li>
+            </ul>
+        </div>
+        }
+    </nav>
+</header>

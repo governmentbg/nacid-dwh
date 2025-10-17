@@ -1,0 +1,107 @@
+<div class="container mt-5">
+    <div class="card no-border shadow mb-4">
+        <div class="card-header">
+            <h5 class="modal-title text-purple fw-bold">
+                <translate-field [bgProperty]="templateGroup.name"
+                                 [enProperty]="templateGroup.nameAlt">
+                </translate-field>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="form-label">{{ 'templates.query.name' | translate }}</label>
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           [(ngModel)]="filter.name"
+                           name="name">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">{{ 'enums.templateAccessLevel.title' | translate }}</label>
+                    <enum-select name="accessLevel"
+                                 [(ngModel)]="filter.accessLevel"
+                                 enumName="templateAccessLevel"
+                                 [enumType]="templateAccessLevel"></enum-select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">{{ 'templates.query.showAsSubquery' | translate }}</label>
+                    <bool-select name="showAsSubquery"
+                                 [(ngModel)]="filter.showAsSubquery">
+                    </bool-select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <div class="d-flex gap-2">
+                    <sync-button (btnClickedEvent)="getData(true)"
+                                 text="root.buttons.search"
+                                 icon="fas fa-search"
+                                 btnClass="btn btn-primary btn-sm"
+                                 [pending]="getDataPending"
+                                 [disabled]="loadingData">
+                    </sync-button>
+
+                    <sync-button (btnClickedEvent)="clear()"
+                                 text="root.buttons.clear"
+                                 icon="fas fa-trash"
+                                 btnClass="btn btn-outline-primary btn-sm"
+                                 [pending]="clearDataPending"
+                                 [disabled]="loadingData">
+                    </sync-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if(!loadingData){
+    @if(searchResult.result && searchResult.result.length > 0){
+    <div class="card no-border shadow mt-4 mb-5">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <search-result [totalCount]="searchResult.totalCount">
+                </search-result>
+            </div>
+
+            <div class="table-scrollable mt-4">
+                <table class="table table-striped">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="col-4">{{ 'templates.query.name' | translate }}</th>
+                            <th class="col-4">{{ 'enums.templateAccessLevel.title' | translate }}</th>
+                            <th class="col-2">{{ 'templates.query.showAsSubquery' | translate }}</th>
+                            <th class="col-2 text-center">{{ 'root.buttons.actions' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(templateQuery of searchResult.result; track templateQuery)
+                        {
+                        <tr template-query-search-tr
+                            [templateQuery]="templateQuery"
+                            (triggerRemove)="removeTemplateQuery($index)"
+                            [templateGroup]="templateGroup">
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <ngb-pagination [collectionSize]="searchResult.totalCount"
+                        [(page)]="filter.currentPage"
+                        [pageSize]="filter.limit"
+                        (pageChange)="getData(false)"
+                        [maxSize]="3"
+                        [rotate]="true"
+                        [boundaryLinks]="true"></ngb-pagination>
+    </div>
+    } @else {
+    <i>{{ 'root.searchResult.noResults' | translate }}</i>
+    }
+    } @else {
+    <loading-section></loading-section>
+    }
+</div>

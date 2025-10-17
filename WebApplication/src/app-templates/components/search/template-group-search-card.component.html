@@ -1,0 +1,56 @@
+<div class="col mt-4">
+    <div class="card no-border shadow">
+        <div class="card-body">
+            <div class="card-title d-flex justify-content-between">
+                <h5 class="text-purple">
+                    <translate-field [bgProperty]="templateGroup.name"
+                                     [enProperty]="templateGroup.nameAlt"
+                                     [class.link-primary]="templateGroup.templateQueryCount > 0"
+                                     (click)="getTemplateQueries()"
+                                     clickStopPropagation>
+                    </translate-field>
+                </h5>
+
+                <div class="d-flex gap-2">
+                    <i class="fa-solid"
+                       title="{{'enums.templateAccessLevel.' + templateAccessLevel[templateGroup.accessLevel] | translate}}"
+                       [class.fa-lock-open]="templateGroup.accessLevel === templateAccessLevel.public"
+                       [class.fa-lock]="templateGroup.accessLevel === templateAccessLevel.private"
+                       [class.text-purple]="templateGroup.accessLevel === templateAccessLevel.public"
+                       [class.text-danger]="templateGroup.accessLevel === templateAccessLevel.private">
+                    </i>
+
+                    @if(hasTemplatesWritePermission){
+                    <i class="fa-solid fa-edit text-purple cursor-pointer"
+                       title="{{'root.buttons.edit' | translate}}"
+                       (click)="editTemplateGroup()"
+                       clickStopPropagation>
+                    </i>
+                    }
+                </div>
+            </div>
+
+            @if(templateGroup.description){
+            <div class="card-text d-flex justify-content-between">
+                <h6 class="text-secondary fst-italic">
+                    <translate-field [bgProperty]="templateGroup.description"
+                                     [enProperty]="templateGroup.descriptionAlt">
+                    </translate-field>
+                </h6>
+            </div>
+            }
+
+            <div class="card-text mt-2">
+                <span>
+                    {{ 'root.searchResult.added' | translate }}
+                </span>
+                <span class="fw-bold">
+                    {{ templateGroup.templateQueryCount }}
+                </span>
+                <span class="text-lowercase">
+                    {{ 'templates.query.titlePlural' | translate }}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

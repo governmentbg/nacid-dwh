@@ -1,0 +1,127 @@
+<div class="row">
+    @if(addingNewTemplate){
+    <div class="col-md-4">
+        <label class="form-label align-self-end">
+            {{ 'templates.group.titleSingular' | translate }}
+            <i class="fas fa-plus text-purple cursor-pointer"
+               title="{{'templates.group.createTitle' | translate}}"
+               (click)="addTemplateGroup()"
+               clickStopPropagation>
+            </i>
+        </label>
+        <nomenclature-select restUrl="templateGroups/nomenclature"
+                             name="templateGroup"
+                             [(ngModel)]="templateQueryDto.templateGroup"
+                             (ngModelChange)="templateGroupChanged($event)"
+                             textTemplate="{{translateService.currentLang === 'bg' ? '{name}' : '{nameAlt}'}}"
+                             [allowClear]="false"
+                             [required]="true"
+                             [disabled]="!isEditMode">
+        </nomenclature-select>
+    </div>
+
+    <div class="col-md-4">
+        <label class="form-label">
+            {{ 'enums.templateAccessLevel.shortTitle' | translate }}
+        </label>
+        <enum-select [(ngModel)]="templateQueryDto.accessLevel"
+                     [allowClear]="false"
+                     enumName="templateAccessLevel"
+                     [enumType]="templateAccessLevel"
+                     name="templateAccessLevel"
+                     [required]="true"
+                     [disabled]="!isEditMode || templateQueryDto?.templateGroup?.accessLevel === templateAccessLevel.private">
+        </enum-select>
+    </div>
+    }
+
+    <div class="col-md-4">
+        <label class="form-label cursor-pointer"
+               for="showAsSubquery">{{ 'templates.query.showAsSubquery' | translate }}</label>
+        <div class="form-check">
+            <input class="form-check-input cursor-pointer"
+                   type="checkbox"
+                   name="showAsSubquery"
+                   id="showAsSubquery"
+                   [(ngModel)]="templateQueryDto.showAsSubquery"
+                   [disabled]="!isEditMode">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <label class="form-label">
+            {{ 'templates.query.name' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+            <span class="input-group-text">{{ 'root.language.bulgarianFull' | translate }}</span>
+            <input type="text"
+                   class="form-control form-control-sm is-invalid-default"
+                   [(ngModel)]="templateQueryDto.name"
+                   name="name"
+                   minlength="2"
+                   maxlength="250"
+                   #name="ngModel"
+                   ngbTooltip="{{ name.invalid ? ('invalidTexts.nonLatin' | translate) : null }}"
+                   tooltipClass="custom-tooltip-invalid"
+                   customRegexValidation="nonLatin"
+                   [disabled]="!isEditMode">
+        </div>
+
+        <div class="input-group input-group-sm mt-2">
+            <span class="input-group-text">{{ 'root.language.englishFull' | translate }}</span>
+            <input type="text"
+                   class="form-control form-control-sm is-invalid-default"
+                   [(ngModel)]="templateQueryDto.nameAlt"
+                   name="nameAlt"
+                   minlength="2"
+                   maxlength="250"
+                   #nameAlt="ngModel"
+                   ngbTooltip="{{ nameAlt.invalid ? ('invalidTexts.nonCyrillic' | translate) : null }}"
+                   tooltipClass="custom-tooltip-invalid"
+                   customRegexValidation="nonCyrillic"
+                   [enableEmptyValidation]="true"
+                   [disabled]="!isEditMode">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <label class="form-label">
+            {{ 'templates.query.description' | translate }}
+        </label>
+        <div class="input-group input-group-sm">
+            <span class="input-group-text">{{ 'root.language.bulgarianFull' | translate }}</span>
+            <input type="text"
+                   class="form-control form-control-sm is-invalid-default"
+                   [(ngModel)]="templateQueryDto.description"
+                   name="description"
+                   minlength="2"
+                   maxlength="500"
+                   #description="ngModel"
+                   ngbTooltip="{{ description.invalid ? ('invalidTexts.nonLatin' | translate) : null }}"
+                   tooltipClass="custom-tooltip-invalid"
+                   customRegexValidation="nonLatin"
+                   [enableEmptyValidation]="true"
+                   [disabled]="!isEditMode">
+        </div>
+
+        <div class="input-group input-group-sm mt-2">
+            <span class="input-group-text">{{ 'root.language.englishFull' | translate }}</span>
+            <input type="text"
+                   class="form-control form-control-sm is-invalid-default"
+                   [(ngModel)]="templateQueryDto.descriptionAlt"
+                   name="descriptionAlt"
+                   minlength="2"
+                   maxlength="500"
+                   #descriptionAlt="ngModel"
+                   ngbTooltip="{{ descriptionAlt.invalid ? ('invalidTexts.nonCyrillic' | translate) : null }}"
+                   tooltipClass="custom-tooltip-invalid"
+                   customRegexValidation="nonCyrillic"
+                   [enableEmptyValidation]="true"
+                   [disabled]="!isEditMode">
+        </div>
+    </div>
+</div>

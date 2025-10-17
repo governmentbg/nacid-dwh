@@ -1,0 +1,41 @@
+<div class="d-flex align-items-center {{inputGroupClass}}"
+     style="position: relative">
+    <input class="{{formControlClass}} {{ required ? 'is-invalid-default' : '' }}"
+           [class.form-control-glow]="datetimeInputGlow && model && !disabled"
+           [minDate]="{year: startYear, month: 1, day: 1}"
+           [maxDate]="useEndYear ? {year: currentYear, month: currentMonth, day: currentDay} : null"
+           [class.col-md-8]="changeTime"
+           name="dp"
+           [(ngModel)]="model"
+           ngbDatepicker
+           #d="ngbDatepicker"
+           (ngModelChange)="changedDate($event)"
+           [disabled]="disabled"
+           [required]="required">
+    @if(!disabled && model && allowClear){
+    <div class="{{clearSelectionClass}} fa fa-times fa-sm cursor-pointer"
+         (click)="clearSelection($event)">
+    </div>
+    }
+    <button class="btn {{btnClass}}"
+            (click)="d.toggle()"
+            type="button"
+            [disabled]="disabled">
+        <span class="far fa-calendar-alt"></span>
+    </button>
+    @if(changeTime){
+    <input type="text"
+           class="{{formControlClass}} col-md-4"
+           [(ngModel)]="time"
+           (ngModelChange)="changedTime($event)"
+           [disabled]="disabled" />
+    }
+    @if(changeTime){
+    <button class="btn {{btnTimeClass}}"
+            type="button"
+            (click)="setCurrentTime()"
+            [disabled]="disabled">
+        <span class="far fa-clock"></span>
+    </button>
+    }
+</div>

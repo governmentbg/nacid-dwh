@@ -1,0 +1,70 @@
+<collapsable-label heading="clickHouse.groupBy.title"
+                   [isCollapsed]="true">
+    <div body>
+        @if(chQuery?.table?.name || chQuery?.subquery) {
+        <div class="card shadow mt-2">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <h6 class="modal-title text-secondary fw-bold">
+                        {{ 'clickHouse.groupBy.groupingSet' | translate }}
+                    </h6>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        @if(chOutputGrouping.length > 0 && chGroupByPreparation.groupByColumns.length > 0) {
+                        <sync-button (btnClickedEvent)="addGroupBy()"
+                                     text="root.buttons.add"
+                                     btnClass="btn btn-primary btn-sm"
+                                     [disabled]="chGroupByPreparationForm.invalid">
+                        </sync-button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <form #chGroupByPreparationForm="ngForm"
+                  autocomplete="off">
+                <div class="card-body">
+                    @if(chOutputGrouping.length > 0) {
+                    <table class="table table-bordered">
+                        <thead class="table-light fs-14">
+                            <tr>
+                                <th class="col-11">{{ 'clickHouse.column' | translate }}</th>
+                                <th class="col-2">
+                                    <div class="d-flex justify-content-center">
+                                        <sync-button (btnClickedEvent)="addGroupingColumn()"
+                                                     icon="fas fa-plus"
+                                                     btnClass="btn btn-outline-success btn-sm fw-bold">
+                                        </sync-button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(groupByColumn of chGroupByPreparation.groupByColumns; track groupByColumn)
+                            {
+                            <tr ch-group-by-tr
+                                [groupByColumn]="groupByColumn"
+                                [chOutputGrouping]="chOutputGrouping"
+                                (groupByColumnChange)="chGroupByPreparation.groupByColumns[$index] = $event"
+                                [index]="$index"
+                                (triggerRemove)="removeGroupingColumn($index)">
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    } @else {
+                    <i>{{ 'clickHouse.output.missingSelectedColumn' | translate }}</i>
+                    }
+                </div>
+            </form>
+        </div>
+
+        <ch-group-by-result [chQuery]="chQuery"
+                            [chGroupBy]="chGroupBy"
+                            (triggerRemoveGroupBy)="removeGroupBy($event)"></ch-group-by-result>
+        } @else {
+        <div class="border p-2">
+            <i>{{ 'clickHouse.pleaseSelectTable' | translate }}</i>
+        </div>
+        }
+    </div>
+</collapsable-label>

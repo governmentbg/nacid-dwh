@@ -1,0 +1,55 @@
+<div class="card shadow mt-4">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h6 class="modal-title text-secondary fw-bold">
+                {{ 'clickHouse.orderBy.selectedResult' | translate }}
+            </h6>
+        </div>
+    </div>
+    <div class="card-body">
+        @if(chOrderBy.length > 0){
+        @if(chOrderBy.length > 1){
+        <div class="d-flex fst-italic text-muted mb-1">
+            {{ 'clickHouse.orderBy.changeOrderHint' | translate }}
+        </div>
+        }
+        <div cdkDropList
+             (cdkDropListDropped)="drop($event)"
+             id="dnd-container">
+            @for(item of chOrderBy; track item)
+            {
+            <div cdkDrag
+                 cdkDragLockAxis="y"
+                 cdkDragBoundary="#dnd-container"
+                 [cdkDragDisabled]="chOrderBy.length < 2"
+                 class="d-flex justify-content-between p-1">
+                <div class="dnd-item"
+                     [class.cursor-pointer]="chOrderBy.length > 1"
+                     tooltipClass="custom-tooltip-purple">
+                    <span class="fw-bold me-1">
+                        {{item.orderByColumn?.columnAs}} - {{ 'enums.orderByType.' + orderByType[item.orderBy] |
+                        translate }}
+                    </span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <sync-button (btnClickedEvent)="changeOrderBy($index)"
+                                 icon="fa-solid {{item.orderBy === orderByType.asc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}}"
+                                 title="{{item.orderBy === orderByType.asc ? 'enums.orderByType.desc' : 'enums.orderByType.asc'}}"
+                                 btnClass="btn btn-sm btn-outline-success">
+                    </sync-button>
+
+                    <sync-button (btnClickedEvent)="removeOrderBy($index)"
+                                 icon="fas fa-times"
+                                 title="root.buttons.remove"
+                                 btnClass="btn btn-sm btn-danger">
+                    </sync-button>
+                </div>
+            </div>
+            }
+        </div>
+        } @else {
+        <i>{{ 'clickHouse.noResultSelected' | translate }}</i>
+        }
+    </div>
+</div>

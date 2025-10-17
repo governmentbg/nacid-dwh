@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="card no-border shadow mt-5">
+        <div class="card-body">
+            <div class="row pb-5 pt-4">
+                <h3 class="text-center">
+                    {{ 'auth.loginTitle' | translate }}
+                </h3>
+                <div class="col-sm-4 offset-sm-4 mt-3">
+                    <sync-button (btnClickedEvent)="requestCode()"
+                                 text="auth.ssoLoginButton"
+                                 btnClass="btn btn-primary w-100"
+                                 [pending]="loginPending"
+                                 [showTextOnPending]="false">
+                    </sync-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

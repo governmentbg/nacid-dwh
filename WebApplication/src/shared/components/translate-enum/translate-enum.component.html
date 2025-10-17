@@ -1,0 +1,7 @@
+<span *ngIf="text; else missingData"
+      class="{{class}}">
+  {{ text | translate }}
+</span>
+<ng-template #missingData>
+  <span class="{{class}}">{{ 'root.searchResult.missingData' | translate }}</span>
+</ng-template>

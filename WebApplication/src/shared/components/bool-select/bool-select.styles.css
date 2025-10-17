@@ -1,0 +1,30 @@
+.bool-select-container {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.search-box-container {
+  position: absolute;
+  width: 100%;
+  z-index: 9998;
+}
+
+.options-container {
+  padding: 0;
+}
+
+.options-item {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+}
+
+.options-item:hover {
+  cursor: pointer;
+  background-color: #135496;
+  color: #fff;
+  opacity: 0.8;
+}
